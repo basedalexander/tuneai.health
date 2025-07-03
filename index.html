@@ -167,6 +167,11 @@
             -ms-overflow-style: none; /* Hide scrollbar for IE/Edge */
             scrollbar-width: none; /* Hide scrollbar for Firefox */
             position: relative; /* Keep for arrow positioning */
+            cursor: grab;
+        }
+
+        .hero-images.active {
+            cursor: grabbing;
         }
 
         .hero-images::-webkit-scrollbar {
@@ -537,9 +542,6 @@
             }
         }
     </style>
-    <script>
-        // No JavaScript for slider arrows needed as they are removed
-    </script>
 </head>
 <body>
     <!-- Google Analytics - Replace with your actual GA_MEASUREMENT_ID -->
@@ -710,5 +712,37 @@
             <p>&copy; 2025 TuneAI. All rights reserved.</p>
         </div>
     </footer>
+    <script>
+        const slider = document.getElementById('heroImages');
+        let isDown = false;
+        let startX;
+        let scrollLeft;
+
+        slider.addEventListener('mousedown', (e) => {
+            isDown = true;
+            slider.classList.add('active');
+            startX = e.pageX - slider.offsetLeft;
+            scrollLeft = slider.scrollLeft;
+            e.preventDefault();
+        });
+
+        slider.addEventListener('mouseleave', () => {
+            isDown = false;
+            slider.classList.remove('active');
+        });
+
+        slider.addEventListener('mouseup', () => {
+            isDown = false;
+            slider.classList.remove('active');
+        });
+
+        slider.addEventListener('mousemove', (e) => {
+            if(!isDown) return; // stop the fn from running
+            e.preventDefault();
+            const x = e.pageX - slider.offsetLeft;
+            const walk = (x - startX) * 2; //scroll-fast
+            slider.scrollLeft = scrollLeft - walk;
+        });
+    </script>
 </body>
 </html> 
