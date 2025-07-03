@@ -354,6 +354,12 @@
             margin-right: auto;
         }
 
+        .cta-buttons-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px; /* Adjust this value for desired horizontal spacing */
+        }
+
         .cta-button {
             background-color: #fff;
             color: var(--primary-blue);
@@ -498,6 +504,10 @@
                 width: 90%; /* Give cards a percentage width to ensure spacing */
                 max-width: 350px; /* Max width for individual cards */
                 margin: 0 auto 20px auto; /* Center horizontally with auto margins and add bottom margin */
+            }
+            .cta-buttons-container {
+                flex-direction: column;
+                gap: 15px; /* Vertical spacing for stacked buttons */
             }
         }
 
@@ -688,8 +698,10 @@
         <section class="cta-section">
             <h2>Join waitlist & get early access</h2>
             <p>Be among the first to experience the product. Sign up for our waitlist and get a chance to participate in private testing, your feedback means a lot!</p>
-            <a href="https://docs.google.com/forms/d/e/1FAIpQLSdsdnJk04RYjjaoRQhrRhROYIFL6R7A5xsjPTlGcozKxRu7mQ/viewform?usp=dialog" class="cta-button" target="_blank">Join waitlist</a>
-            <a href="https://docs.google.com/forms/d/e/1FAIpQLSdyG8oPrzNnDELY6bJm2wgoB6-_ai9oBvrmZNuCUf2GcG1cTw/viewform?usp=dialog" class="cta-button" target="_blank" style="margin-top: 20px;">Get early access</a>
+            <div class="cta-buttons-container">
+                <a href="https://docs.google.com/forms/d/e/1FAIpQLSdsdnJk04RYjjaoRQhrRhROYIFL6R7A5xsjPTlGcozKxRu7mQ/viewform?usp=dialog" class="cta-button" target="_blank">Join waitlist</a>
+                <a href="https://docs.google.com/forms/d/e/1FAIpQLSdyG8oPrzNnDELY6bJm2wgoB6-_ai9oBvrmZNuCUf2GcG1cTw/viewform?usp=dialog" class="cta-button" target="_blank">Get early access</a>
+            </div>
         </section>
     </main>
 
