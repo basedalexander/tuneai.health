@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TuneAI - Smarter decisions from your biology</title>
+    <link rel="apple-touch-icon" sizes="180x180" href="static/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="static/android-chrome-192x192.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="static/android-chrome-512x512.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="static/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="static/favicon-16x16.png">
+    <link rel="manifest" href="static/site.webmanifest">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-blue: #0c8ef0; /* Apple Blue */
+            --light-gray: #F5F5F7; /* Light background gray */
+            --dark-text: #1D1D1F; /* Dark text for contrast */
+            --medium-text: #6e6e73; /* Medium gray for secondary text */
+            --border-color: #D2D2D7;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--light-gray);
+            color: var(--dark-text);
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        /* Header */
+        header {
+            background-color: #fff;
+            padding: 0px 0;
+            border-bottom: 1px solid var(--border-color);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            font-weight: 600;
+            font-size: 22px;
+            color: var(--dark-text);
+            text-decoration: none;
+        }
+
+        .logo img {
+            height: 30px;
+            margin-right: 10px;
+        }
+
+        .header-link {
+            color: var(--primary-blue);
+            text-decoration: none;
+            font-weight: 500;
+            padding: 5px 10px;
+            border-radius: 5px;
+            transition: background-color 0.2s ease;
+        }
+
+        .header-link:hover {
+            background-color: rgba(0, 122, 255, 0.1); /* Light blue highlight on hover */
+        }
+
+        /* Hero Section */
+        .hero {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            padding: 80px 20px 40px 20px; /* Reduced bottom padding to decrease distance from next section */
+            gap: 40px;
+            background-color: #fff;
+        }
+
+        .hero-content {
+            max-width: 600px;
+        }
+
+        .hero-content h1 {
+            font-size: 48px;
+            font-weight: 700;
+            margin-bottom: 0px; /* Reduced further from -15px */
+            line-height: 1.1;
+        }
+
+        .hero-title-group {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .hero-main-icon {
+            height: 180px;
+            margin-bottom: 0px;
+        }
+
+        .hero-content p {
+            font-size: 16px;
+            color: var(--medium-text);
+            margin-bottom: 30px;
+        }
+
+        .app-store-button {
+            display: inline-block;
+            background-color: transparent;
+            color: var(--primary-blue);
+            padding: 10px 20px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-size: 18px;
+            font-weight: 600;
+            transition: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid var(--primary-blue);
+            cursor: default;
+            margin-bottom: 40px; /* Increased space below the button */
+        }
+
+        .app-store-button:hover {
+            /* Removed hover styles */
+        }
+
+        .app-store-badge-icon {
+            height: 50px;
+            width: auto;
+            margin-left: 10px; /* Added space to the left of the icon */
+        }
+
+        .hero-images {
+            display: flex;
+            flex-wrap: nowrap; /* Prevent wrapping on all slider resolutions */
+            overflow-x: scroll; /* Enable horizontal scrolling */
+            scroll-snap-type: x proximity; /* Smooth snapping behavior */
+            scroll-behavior: smooth; /* Smooth scrolling */
+            width: auto; /* Allow width to be determined by content */
+            max-width: 1100px; /* 3.5 images (300px each) + gaps: 3.5*300 + 2.5*20 = 1050 + 50 = 1100px */
+            margin: 0 auto; /* Center the container */
+            justify-content: flex-start; /* Align items to the start for scrolling */
+            gap: 20px; /* Add gap between images */
+            padding-left: 20px; /* Add padding to the start of the scrollable area */
+            scroll-padding-left: 20px; /* Ensure content snaps with padding */
+            -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+            -ms-overflow-style: none; /* Hide scrollbar for IE/Edge */
+            scrollbar-width: none; /* Hide scrollbar for Firefox */
+            position: relative; /* Keep for arrow positioning */
+        }
+
+        .hero-images::-webkit-scrollbar {
+            display: none; /* Hide scrollbar for webkit browsers */
+        }
+
+        .hero-images img {
+            width: auto; /* Let flex-basis control width */
+            max-width: 300px; /* This will be the base for flex-basis */
+            height: auto; /* Allow height to adjust proportionally */
+            border-radius: 15px;
+            flex: 0 0 300px; /* Maintain initial width, height scales with it */
+            object-fit: contain; /* Ensure entire image is visible, no cropping */
+            scroll-snap-align: start; /* Snap to the start of each image */
+            margin-right: 0;
+        }
+
+        /* Flowchart Section */
+        .flowchart-section {
+            background-color: #fff;
+            padding: 20px 20px 80px 20px; /* Increased bottom padding */
+            text-align: center;
+        }
+
+        .flowchart-section h2 {
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 40px;
+        }
+
+        .flowchart-diagram {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: flex-start; /* Align items to the top */
+            gap: 20px;
+        }
+
+        .flowchart-item {
+            background-color: #fff;
+            padding: 25px 30px;
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15); /* Stronger shadow for better visibility */
+            border: 1px solid var(--border-color); /* Add a subtle border */
+            font-size: 18px;
+            font-weight: 500;
+            color: var(--dark-text);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-width: 180px;
+            height: 120px;
+            box-sizing: border-box;
+        }
+
+        .flowchart-item img {
+            width: 40px; /* Adjust as needed */
+            height: 40px; /* Adjust as needed */
+            margin-bottom: 10px; /* Space between icon and text */
+        }
+
+        .flowchart-arrow {
+            font-size: 50px;
+            color: var(--primary-blue);
+            margin: 0 10px;
+            font-weight: 700;
+        }
+
+        .flowchart-data-column {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .data-point-item {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            margin-bottom: 20px;
+        }
+
+        .data-point-item img {
+            width: 40px; /* Re-applied specific size for these icons */
+            height: 40px; /* Re-applied specific size for these icons */
+            margin-right: 10px; /* Re-applied specific margin for these icons */
+        }
+
+        .data-point-item span {
+            font-size: 18px;
+            font-weight: 500;
+            color: var(--dark-text);
+        }
+
+        /* Features Section */
+        .features-section {
+            background-color: #fcf8f2; /* Updated background color as requested */
+            padding: 80px 20px;
+            text-align: center;
+        }
+
+        .features-section h2 {
+            font-size: 40px; /* Larger title for Apple style */
+            font-weight: 700;
+            margin-bottom: 60px; /* More space below the title */
+            color: var(--dark-text);
+        }
+
+        .features-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px; /* Increased gap for more breathing room */
+            padding: 20px 0;
+            max-width: 1000px; /* Constrain width for a cleaner look */
+            margin: 0 auto; /* Center the grid */
+        }
+
+        .feature-item {
+            background-color: #ffffff; /* Pure white background for cards */
+            padding: 40px 30px; /* More padding inside cards */
+            border-radius: 18px; /* More rounded corners */
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.08); /* Stronger, softer shadow */
+            text-align: center; /* Center align content within cards */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transition for hover */
+        }
+
+        .feature-item:hover {
+            transform: translateY(-10px); /* Lift effect on hover */
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12); /* Enhanced shadow on hover */
+        }
+
+        .feature-item h3 {
+            font-size: 24px; /* Larger feature title */
+            font-weight: 600; /* Slightly less bold than section title */
+            margin-top: 20px; /* Space between icon and title */
+            margin-bottom: 10px;
+            color: var(--dark-text);
+        }
+
+        .feature-item p {
+            font-size: 17px; /* Slightly larger paragraph text */
+            color: var(--medium-text);
+            line-height: 1.6;
+        }
+
+        .feature-icon {
+            margin-bottom: 10px; /* Space below the icon */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 48px; /* Set a consistent size for the icon container */
+            height: 48px;
+            /* background-color: var(--primary-blue); For testing icon background */
+            border-radius: 50%; /* If a circular background is desired */
+        }
+
+        .feature-icon svg {
+            width: 32px; /* Size of the SVG icon */
+            height: 32px;
+            fill: var(--dark-text); /* Ensure the icon color matches the text */
+        }
+
+        /* Call to Action Section */
+        .cta-section {
+            background-color: var(--primary-blue);
+            color: #fff;
+            padding: 80px 20px;
+            text-align: center;
+        }
+
+        .cta-section h2 {
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .cta-section p {
+            font-size: 20px;
+            margin-bottom: 40px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta-button {
+            background-color: #fff;
+            color: var(--primary-blue);
+            padding: 18px 40px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-size: 20px;
+            font-weight: 700;
+            transition: background-color 0.2s ease, color 0.2s ease;
+        }
+
+        .cta-button:hover {
+            background-color: #fcf8f2; /* Changed hover background color as requested */
+            color: var(--primary-blue); /* Changed text color to primary blue on hover for contrast */
+        }
+
+        /* Footer (optional, but good practice) */
+        footer {
+            background-color: #fff;
+            color: var(--dark-text);
+            text-align: center;
+            padding: 0px 0;
+            font-size: 12px;
+            margin-top: auto; /* Pushes footer to the bottom */
+        }
+
+        footer p {
+            margin: 0; /* Remove default paragraph margins */
+            line-height: 1em; /* Reduce line height */
+        }
+
+        footer .container {
+            padding: 5px 20px; /* Reduced vertical padding */
+        }
+
+        /* Media queries for responsiveness */
+        @media (max-width: 1024px) {
+            .hero-images {
+                max-width: 780px; /* 2.5 images (300px each) + gaps: 2.5*300 + 1.5*20 = 750 + 30 = 780px */
+            }
+            .hero-images img {
+                flex: 0 0 300px; /* Maintain initial width, height scales with it */
+                height: auto; /* Allow height to adjust proportionally */
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero {
+                flex-direction: column; /* Stack content and images vertically */
+                padding: 60px 20px; /* Adjust padding for mobile */
+            }
+            .hero-content {
+                text-align: center;
+                margin-bottom: 40px; /* Space between content and images */
+            }
+
+            .hero-title-group {
+                flex-direction: column;
+                align-items: center;
+            }
+            .hero-main-icon {
+                height: 180px;
+                margin-bottom: 0px;
+            }
+
+            .hero-content h1 {
+                font-size: 44px;
+                margin-top: 10px; /* Adjust margin to bring title closer */
+                margin-bottom: -20px;
+            }
+            .hero-content p {
+                font-size: 18px;
+            }
+
+            .hero-images {
+                width: 100%; /* Full width for mobile slider */
+                max-width: unset; /* Remove max-width constraint */
+                padding-left: 20px; /* Maintain padding for peeking effect */
+                scroll-padding-left: 20px; /* Maintain scroll padding for peeking effect */
+                gap: 10px; /* Revert gap for mobile */
+            }
+
+            .hero-images img {
+                flex: 0 0 calc((100% / 1.5) - (10px * (1.5 - 1) / 1.5)); /* Revert flex calculation for mobile */
+                width: auto; /* Let flex control width */
+                height: 550px; /* Revert height for mobile images */
+                object-fit: contain; /* Ensure entire image is visible */
+                scroll-snap-align: start;
+                max-width: unset;
+                margin-right: 0;
+            }
+
+            .flowchart-section {
+                padding: 60px 20px;
+            }
+
+            .flowchart-section h2, .cta-section h2 {
+                font-size: 28px;
+            }
+
+            .flowchart-diagram {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .flowchart-item {
+                /* width: 100%; */ /* Removed full width on mobile */
+                max-width: 300px; /* Set a max-width for better mobile appearance */
+                margin-bottom: 20px; /* Space between vertical items */
+                align-self: center; /* Center content within item */
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            .flowchart-data-column {
+                /* width: 100%; */ /* Removed full width on mobile */
+                max-width: 300px; /* Set a max-width for better mobile appearance */
+                margin: 0 auto;
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+                justify-content: center;
+            }
+
+            .flowchart-arrow {
+                transform: rotate(90deg);
+                margin: 20px 0;
+            }
+
+            .flowchart-item.column-2 .flowchart-data-column {
+                align-items: center; /* Center content in second column on mobile */
+                justify-content: center;
+            }
+
+            .features-container {
+                display: flex; /* Change to flexbox for better centering on small screens */
+                flex-wrap: wrap;
+                justify-content: center; /* Center the flex items */
+                padding: 20px 0; /* Keep some padding for the container */
+            }
+            .feature-item {
+                width: 90%; /* Give cards a percentage width to ensure spacing */
+                max-width: 350px; /* Max width for individual cards */
+                margin: 0 auto 20px auto; /* Center horizontally with auto margins and add bottom margin */
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero {
+                padding: 40px 15px;
+            }
+            .hero-content h1 {
+                font-size: 30px;
+            }
+            .hero-content p {
+                font-size: 16px;
+            }
+            .app-store-button, .cta-button {
+                padding: 12px 25px;
+                font-size: 16px;
+            }
+            .flowchart-item {
+                font-size: 16px;
+                padding: 20px;
+            }
+            .cta-section p {
+                font-size: 16px;
+            }
+            .feature-item {
+                /* max-width: 100%; Removed to allow 90% width from larger breakpoint to apply */
+            }
+        }
+    </style>
+    <script>
+        // No JavaScript for slider arrows needed as they are removed
+    </script>
+</head>
+<body>
+    <!-- Google Analytics - Replace with your actual GA_MEASUREMENT_ID -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXX"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-XXXXXXX'); // Replace with your actual GA_MEASUREMENT_ID
+    </script>
+
+    <header>
+        <div class="container">
+            <a href="#" class="logo">
+                <img src="static/heart.png" alt="TuneAI Logo">
+                TuneAI
+            </a>
+            <nav>
+                <a href="https://docs.google.com/forms/d/e/1FAIpQLSdyG8oPrzNnDELY6bJm2wgoB6-_ai9oBvrmZNuCUf2GcG1cTw/viewform?usp=dialog" class="header-link" target="_blank">Get Early Access</a>
+                <a href="contacts.html" class="header-link">Contacts</a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="hero-content">
+                <div class="hero-title-group">
+                    <img src="static/tuneai_icon.png" alt="TuneAI Icon" class="hero-main-icon">
+                    <h1>TuneAI</h1>
+                </div>
+                <h2 class="hero_subtitle">Smarter decisions from your biology</h2>
+                <p>ChatGPT for health done right</p>
+                <span class="app-store-button">
+                    Coming to App Store <img src="static/app_store_badge.svg" alt="Download on the App Store" class="app-store-badge-icon">
+                </span>
+            </div>
+            <div class="hero-images" id="heroImages">
+                <img src="static/screenshot1.png" alt="Screenshot 1">
+                <img src="static/screenshot2.png" alt="Screenshot 2">
+                <img src="static/screenshot3.png" alt="Screenshot 3">
+                <img src="static/screenshot4.png" alt="Screenshot 4">
+                <img src="static/screenshot5.png" alt="Screenshot 5">
+                <img src="static/screenshot6.png" alt="Screenshot 6">
+                <img src="static/screenshot7.png" alt="Screenshot 7">
+            </div>
+        </section>
+
+        <section class="flowchart-section">
+            <h2>How it works</h2>
+            <div class="flowchart-diagram">
+                <div class="flowchart-item">
+                    <div class="flowchart-icon">
+                        <svg fill="none" viewBox="0 0 24 24" height="24" width="24" xmlns="http://www.w3.org/2000/svg">
+                            <path xmlns="http://www.w3.org/2000/svg" d="M12 4C7.58172 4 4 7.58172 4 12C4 16.4183 7.58172 20 12 20C16.4183 20 20 16.4183 20 12C20 7.58172 16.4183 4 12 4ZM2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12Z" fill="#0D0D0D"></path>
+                            <path xmlns="http://www.w3.org/2000/svg" d="M12 14C11.4477 14 11 13.5523 11 13V12C11 11.4477 11.4477 11 12 11C12.5523 11 13 11.4477 13 12V13C13 13.5523 12.5523 14 12 14Z" fill="#0D0D0D"></path>
+                            <path xmlns="http://www.w3.org/2000/svg" d="M10.5 16.5C10.5 15.6716 11.1716 15 12 15C12.8284 15 13.5 15.6716 13.5 16.5C13.5 17.3284 12.8284 18 12 18C11.1716 18 10.5 17.3284 10.5 16.5Z" fill="#0D0D0D"></path>
+                            <path xmlns="http://www.w3.org/2000/svg" d="M12.3899 7.81137C11.4329 7.7658 10.6304 8.3004 10.4864 9.1644C10.3956 9.70917 9.88037 10.0772 9.3356 9.9864C8.79083 9.8956 8.42281 9.38037 8.51361 8.8356C8.86961 6.69961 10.8171 5.73421 12.4851 5.81363C13.3395 5.85432 14.2176 6.16099 14.8937 6.79278C15.5866 7.44027 16 8.36777 16 9.5C16 10.7913 15.4919 11.7489 14.6172 12.3321C13.8141 12.8675 12.8295 13 12 13C11.4477 13 11 12.5523 11 12C11 11.4477 11.4477 11 12 11C12.6705 11 13.1859 10.8825 13.5078 10.668C13.7581 10.5011 14 10.2087 14 9.5C14 8.88224 13.7884 8.49723 13.5282 8.2541C13.2512 7.99526 12.848 7.83318 12.3899 7.81137Z" fill="#0D0D0D"></path>
+                        </svg>
+                    </div>
+                    <span>Ask a question</span>
+                </div>
+                <span class="flowchart-arrow">&rarr;</span>
+                <div class="flowchart-data-column">
+                    <div class="data-point-item">
+                        <img src="static/notes_icon.svg" alt="Your goals icon">
+                        <span>Goals, personal context etc</span>
+                    </div>
+                    <div class="data-point-item">
+                        <img src="static/notes_icon.svg" alt="Food logs icon">
+                        <span>Food logs</span>
+                    </div>
+                    <div class="data-point-item">
+                        <img src="static/pdf_icon_v3.png" alt="Lab tests icon">
+                        <img src="static/csv_icon.png" alt="Lab tests icon">
+                        <span>Lab tests</span>
+                    </div>
+                    <div class="data-point-item">
+                        <img src="static/notes_icon.svg" alt="Supplement logs icon">
+                        <span>Supplements logs</span>
+                    </div>
+                    <div class="data-point-item">
+                        <img src="static/apple_health_icon.png" alt="Apple Health icon">
+                        <span>Apple health data</span>
+                    </div>
+                    <div class="data-point-item">
+                        <img src="static/notes_icon.svg" alt="Workouts logs icon">
+                        <span>Workouts logs</span>
+                    </div>
+                    <div class="data-point-item">
+                        <img src="static/notes_icon.svg" alt="Workout logs icon">
+                        <span>Other logs (journals, notes)</span>
+                    </div>
+                </div>
+                <span class="flowchart-arrow">&rarr;</span>
+                <div class="flowchart-item">
+                    <svg fill="none" viewBox="0 0 24 24" height="40" width="40" xmlns="http://www.w3.org/2000/svg">
+                        <path xmlns="http://www.w3.org/2000/svg" d="M20.6644 5.2526C21.0772 5.61952 21.1143 6.25159 20.7474 6.66437L10.0808 18.6644C9.89099 18.8779 9.61898 19 9.33334 19C9.04771 19 8.7757 18.8779 8.58593 18.6644L3.2526 12.6644C2.88568 12.2516 2.92286 11.6195 3.33565 11.2526C3.74843 10.8857 4.3805 10.9229 4.74742 11.3356L9.33334 16.4948L19.2526 5.33565C19.6195 4.92286 20.2516 4.88568 20.6644 5.2526Z" fill="#0D0D0D"></path>
+                    </svg>
+                    <span>Get personalized answer</span>
+                </div>
+            </div>
+        </section>
+
+        <section class="features-section">
+            <h2>Core features</h2>
+            <div class="features-container">
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <svg fill="none" viewBox="0 0 24 24" height="24" width="24" xmlns="http://www.w3.org/2000/svg">
+                            <path xmlns="http://www.w3.org/2000/svg" d="M12 4C7.58172 4 4 7.58172 4 12C4 16.4183 7.58172 20 12 20C16.4183 20 20 16.4183 20 12C20 7.58172 16.4183 4 12 4ZM2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12ZM12 6C12.5523 6 13 6.44772 13 7V11.5858L15.7071 14.2929C16.0976 14.6834 16.0976 15.3166 15.7071 15.7071C15.3166 16.0976 14.6834 16.0976 14.2929 15.7071L11.2929 12.7071C11.1054 12.5196 11 12.2652 11 12V7C11 6.44772 11.4477 6 12 6Z" fill="#0D0D0D"></path>
+                        </svg>
+                    </div>
+                    <h3>Time saver</h3>
+                    <p>Reach your goals with actionable steps, no more unnecessary charts.</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <svg fill="none" viewBox="0 0 24 24" height="24" width="24" xmlns="http://www.w3.org/2000/svg">
+                            <path xmlns="http://www.w3.org/2000/svg" d="M12 4C13.6477 4 15 5.35228 15 7V10H9V7C9 5.35228 10.3523 4 12 4ZM17 10V7C17 4.24772 14.7523 2 12 2C9.24771 2 7 4.24772 7 7V10H6C4.89543 10 4 10.8954 4 12V20C4 21.1046 4.89543 22 6 22H18C19.1046 22 20 21.1046 20 20V12C20 10.8954 19.1046 10 18 10H17ZM6 12H18V20H6V12Z" fill="#0D0D0D"></path>
+                        </svg>
+                    </div>
+                    <h3>Privacy first, offline first.</h3>
+                    <p>User data is secure and store on the device (this includes memories, chat histories and more).</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <svg fill="none" viewBox="0 0 24 24" height="24" width="24" xmlns="http://www.w3.org/2000/svg">
+                            <path xmlns="http://www.w3.org/2000/svg" d="M17.7071 2.29289C17.3166 1.90237 16.6834 1.90237 16.2929 2.29289L14 4.58579L12.7071 3.29289C12.3166 2.90237 11.6834 2.90237 11.2929 3.29289L5.29289 9.29289C4.90237 9.68342 4.90237 10.3166 5.29289 10.7071C5.68342 11.0976 6.31658 11.0976 6.70711 10.7071L12 5.41421L12.5858 6L10.2929 8.29289L3.29289 15.2929C3.10536 15.4804 3 15.7348 3 16V20C3 20.5523 3.44772 21 4 21H8C8.26522 21 8.51957 20.8946 8.70711 20.7071L15.7071 13.7071L21.7071 7.70711C22.0976 7.31658 22.0976 6.68342 21.7071 6.29289L17.7071 2.29289ZM14.7071 6.70711L17 4.41421L19.5858 7L15 11.5858L12.4142 9L14.7071 6.70711ZM5 16.4142L11 10.4142L13.5858 13L7.58579 19H5V16.4142Z" fill="#0D0D0D"></path>
+                        </svg>
+                    </div>
+                    <h3>Effortless logging</h3>
+                    <p>Voice, photo, shortcuts.</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <svg fill="none" viewBox="0 0 24 24" height="24" width="24" xmlns="http://www.w3.org/2000/svg">
+                            <path xmlns="http://www.w3.org/2000/svg" d="M4 4C4 2.89543 4.89543 2 6 2H14C14.2652 2 14.5196 2.10536 14.7071 2.29289L19.7071 7.29289C19.8946 7.48043 20 7.73478 20 8V20C20 21.1046 19.1046 22 18 22H6C4.89543 22 4 21.1046 4 20V4ZM17.5858 8L14 4.41421V8H17.5858ZM12 4L6 4V20H18V10H13C12.4477 10 12 9.55228 12 9V4ZM8 13C8 12.4477 8.44772 12 9 12H15C15.5523 12 16 12.4477 16 13C16 13.5523 15.5523 14 15 14H9C8.44772 14 8 13.5523 8 13ZM8 17C8 16.4477 8.44772 16 9 16H15C15.5523 16 16 16.4477 16 17C16 17.5523 15.5523 18 15 18H9C8.44772 18 8 17.5523 8 17Z" fill="#0D0D0D"></path>
+                        </svg>
+                    </div>
+                    <h3>Plain text rules it all.</h3>
+                    <p>Import / export your data in plain language.</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <svg fill="none" viewBox="0 0 24 24" height="24" width="24" xmlns="http://www.w3.org/2000/svg">
+                            <path xmlns="http://www.w3.org/2000/svg" d="M3 5C3 3.89543 3.89543 3 5 3H19C20.1046 3 21 3.89543 21 5V19C21 20.1046 20.1046 21 19 21H5C3.89543 21 3 20.1046 3 19V5ZM19 5H5V19H19V5ZM12 7C12.5523 7 13 7.44772 13 8V16C13 16.5523 12.5523 17 12 17C11.4477 17 11 16.5523 11 16V8C11 7.44772 11.4477 7 12 7ZM16 9C16.5523 9 17 9.44772 17 10V16C17 16.5523 16.5523 17 16 17C15.4477 17 15 16.5523 15 16V10C15 9.44772 15.4477 9 16 9ZM8 11C8.55228 11 9 11.4477 9 12V16C9 16.5523 8.55228 17 8 17C7.44772 17 7 16.5523 7 16V12C7 11.4477 7.44772 11 8 11Z" fill="#0D0D0D"></path>
+                        </svg>
+                    </div>
+                    <h3>Stay on track</h3>
+                    <p>With proactive nudging/reports and requests from the assistant.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="cta-section">
+            <h2>Join waitlist & get early access</h2>
+            <p>Be among the first to experience the product. Sign up for our waitlist and get a chance to participate in private testing, your feedback means a lot!</p>
+            <a href="https://docs.google.com/forms/d/e/1FAIpQLSdsdnJk04RYjjaoRQhrRhROYIFL6R7A5xsjPTlGcozKxRu7mQ/viewform?usp=dialog" class="cta-button" target="_blank">Join waitlist</a>
+            <a href="https://docs.google.com/forms/d/e/1FAIpQLSdyG8oPrzNnDELY6bJm2wgoB6-_ai9oBvrmZNuCUf2GcG1cTw/viewform?usp=dialog" class="cta-button" target="_blank" style="margin-top: 20px;">Get early access</a>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 TuneAI. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html> 
