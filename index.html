@@ -548,6 +548,50 @@
                 /* max-width: 100%; Removed to allow 90% width from larger breakpoint to apply */
             }
         }
+
+        .video-section {
+            background-color: var(--light-gray);
+            padding: 80px 20px;
+            text-align: center;
+            border-bottom: 1px solid var(--border-color);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .video-section h2 {
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 40px;
+            color: var(--dark-text);
+        }
+
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            height: 0;
+            overflow: hidden;
+            max-width: 700px; /* Reduced max-width for smaller video preview on desktop */
+            margin: 0 auto;
+            border-radius: 18px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08), 0 15px 30px rgba(0, 0, 0, 0.05);
+        }
+
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 18px;
+        }
+
+        @media (max-width: 768px) {
+            .video-section {
+                padding: 40px 20px;
+            }
+            .video-section h2 {
+                font-size: 28px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -644,7 +688,7 @@
                         </svg>
                     </div>
                     <h3>Truly smart health assistant</h3>
-                    <p>No more overwhelming charts, generic answers and mememory loss.</p>
+                    <p>No more overwhelming charts, generic answers and amnesia</p>
                 </div>
                 <div class="feature-item">
                     <div class="feature-icon">
@@ -694,6 +738,14 @@
                     <h3>Free data format</h3>
                     <p>Import / export your data in plain text or more structured formats</p>
                 </div>
+            </div>
+        </section>
+
+        <section class="video-section">
+            <h2>Watch it work</h2>
+            <p style="color: var(--medium-text); font-size: 14px; margin-top: -30px; margin-bottom: 30px;">Demo of an early alpha version</p>
+            <div class="video-container">
+                <iframe src="https://www.youtube.com/embed/pABt_GCjoB0" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
             </div>
         </section>
 
