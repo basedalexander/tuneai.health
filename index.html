@@ -391,16 +391,18 @@
         /* Footer (optional, but good practice) */
         footer {
             background-color: #fff;
-            color: var(--dark-text);
+            color: var(--medium-text);
             text-align: center;
-            padding: 0px 0;
-            font-size: 12px;
-            margin-top: auto; /* Pushes footer to the bottom */
+            padding: 5px 20px; /* Reduced padding again by 2 times */
+            border-top: 1px solid var(--border-color);
+            box-shadow: 0 -2px 4px rgba(0,0,0,0.02);
+            margin-top: auto; /* Pushes the footer to the bottom */
         }
 
         footer p {
-            margin: 0; /* Remove default paragraph margins */
-            line-height: 1em; /* Reduce line height */
+            margin: 0;
+            line-height: 1em;
+            font-size: 10px; /* Reduced font size */
         }
 
         footer .container {
