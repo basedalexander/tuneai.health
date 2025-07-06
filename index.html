@@ -31,8 +31,12 @@
             display: flex;
             flex-direction: column;
             min-height: 100vh;
-            padding-top: 80px; /* Add padding to body to prevent content from hiding under fixed header */
             overflow-x: hidden; /* Prevent horizontal scrolling */
+        }
+
+        main { /* Added styles for the main content area */
+            margin-top: 64px; /* Push main content down by header height */
+            flex-grow: 1; /* Allow main to grow and push footer to bottom */
         }
 
         .container {
@@ -45,20 +49,35 @@
         /* Header */
         header {
             background-color: #fff;
-            padding: 0px 0;
-            border-bottom: 1px solid var(--border-color);
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            padding: 0; /* Ensure no padding to control height precisely */
+            border-bottom: none; /* Remove the horizontal rule */
+            box-shadow: none; /* Removed initial box-shadow to eliminate gray background */
             position: fixed; /* Make header fixed */
             width: 100%; /* Full width */
             top: 0; /* Align to top */
             left: 0; /* Align to left */
             z-index: 1000; /* Ensure it's above other content */
+            height: 64px; /* Set fixed height for header */
+            display: flex; /* Use flexbox for centering content */
+            align-items: center; /* Vertically center content */
+            transition: background-color 0.3s ease, backdrop-filter 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .header-scrolled {
+            background-color: rgba(255, 255, 255, 0.8); /* bg-white/80 */
+            backdrop-filter: blur(8px); /* backdrop-blur-md */
+            -webkit-backdrop-filter: blur(8px); /* For Safari */
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1); /* Slightly more prominent shadow when scrolled */
         }
 
         header .container {
             display: flex;
             justify-content: space-between;
-            align-items: center;
+            align-items: center; /* Ensure vertical centering of content within the container */
+            max-width: 1280px; /* Set max-width for header container */
+            width: 100%; /* Ensure it takes full width within its parent */
+            margin: 0 auto; /* Center the container */
+            padding: 0 20px; /* Add horizontal padding */
         }
 
         .logo {
@@ -68,10 +87,15 @@
             font-size: 22px;
             color: var(--dark-text);
             text-decoration: none;
+            transition: transform 0.12s ease-out; /* Add transition for pulse effect */
+        }
+
+        .logo:hover {
+            transform: scale(1.05); /* Pulse effect on hover */
         }
 
         .logo img {
-            height: 40px; /* Increased size again */
+            height: 24px; /* Set logo height to 24px */
             margin-right: 10px;
         }
 
@@ -81,12 +105,137 @@
             font-weight: 500;
             padding: 5px 10px;
             border-radius: 5px;
-            transition: background-color 0.1s ease, color 0.1s ease; /* Faster transition */
+            transition: background-color 0.1s ease, color 0.1s ease, text-decoration 0.2s ease; /* Add text-decoration to transition */
         }
 
         .header-link:hover {
             background-color: transparent; /* Removed background color on hover */
-            color: #0056b3; /* Darker blue text on hover */
+            color: #0056b3; /* Darker blue text on hover (blue-700) */
+            text-decoration: underline; /* Add underline on hover */
+        }
+
+        .cta-header-button { /* New style for "Early access" button */
+            border: 1px solid #0c8ef0; /* Border = #0c8ef0 */
+            border-radius: 8px; /* 8 px rounding */
+            padding: 12px 20px; /* 12px vertical padding */
+            font-weight: 600;
+            background-color: transparent;
+            color: #0c8ef0; /* Same as border color */
+            text-decoration: none;
+            transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+        }
+
+        .cta-header-button:hover {
+            background-color: var(--primary-blue);
+            color: #fff;
+        }
+
+        .header-nav-right { /* New container for right cluster to manage spacing */
+            display: flex;
+            align-items: center;
+            gap: 24px; /* 24px spacing between "Early access" and "Contacts" */
+            justify-content: flex-end; /* Align items to the right */
+            /* Removed width: 100%; */
+        }
+
+        .hamburger {
+            display: none; /* Hidden by default, will be shown on mobile */
+            flex-direction: column;
+            justify-content: space-around; /* Re-added to space out hamburger lines */
+            width: 24px; /* Width of the hamburger icon */
+            height: 18px; /* Height of the hamburger icon */
+            cursor: pointer;
+            background: transparent;
+            border: none;
+            padding: 0;
+            z-index: 1001; /* Above header */
+            position: relative; /* Add relative positioning for absolute children */
+        }
+
+        .hamburger span {
+            display: block;
+            width: 100%;
+            height: 2px;
+            background-color: var(--dark-text);
+            border-radius: 2px;
+            transition: all 0.3s ease;
+            /* Removed absolute positioning and transforms from default state */
+        }
+
+        .hamburger.open span:nth-child(1) {
+            position: absolute; /* Apply absolute positioning when open */
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(45deg); /* Center and rotate */
+        }
+
+        .hamburger.open span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.open span:nth-child(3) {
+            position: absolute; /* Apply absolute positioning when open */
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-45deg); /* Center and rotate */
+        }
+
+        .mobile-nav-drawer {
+            display: none; /* Hidden by default */
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background-color: #fff;
+            z-index: 999;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 64px 20px 20px; /* Padding from top to account for header height */
+            box-sizing: border-box;
+            transform: translateY(-100%); /* Start off-screen */
+            transition: transform 0.3s ease-out;
+        }
+
+        .mobile-nav-drawer.open {
+            transform: translateY(0%); /* Slide in */
+            display: flex;
+        }
+
+        .mobile-nav-drawer .logo {
+            margin-bottom: 40px;
+        }
+
+        .mobile-nav-drawer .nav-links-mobile {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .mobile-nav-drawer .nav-links-mobile .header-link {
+            font-size: 24px;
+            padding: 10px 0;
+            color: var(--dark-text);
+        }
+
+        .mobile-nav-drawer .cta-header-button {
+            width: 100%;
+            max-width: 300px; /* Limit button width */
+            text-align: center;
+            padding: 15px 0;
+        }
+
+        /* Mobile specific display toggles for header elements */
+        @media (max-width: 768px) {
+            .header-nav-right.desktop-only {
+                display: none;
+            }
+            .hamburger.mobile-only {
+                display: flex;
+            }
         }
 
         /* Hero Section */
@@ -473,41 +622,7 @@
 
         /* Dark Mode (Conceptual - need to define dark mode variables) */
         @media (prefers-color-scheme: dark) {
-            .device-strip-container {
-                /* background-color: #1c1c1e; */
-                /* border-color: #38383a; */
-                /* box-shadow: 0 2px 4px rgba(0,0,0,0.2); */
-            }
-            .device-strip-item,
-            .device-feature-item { /* Apply dark mode to new feature items */
-                /* color: #f5f5f7; */
-            }
-            .device-logo img,
-            .device-feature-item img { /* Apply dark mode to new feature item images */
-                /* filter: invert(100%) grayscale(100%) brightness(0.8) !important; */
-            }
-            .device-separator {
-                /* color: #b0b0b0; */
-            }
-            .device-pill {
-                /* background-color: #333333; */
-                /* color: #f5f5f7; */
-                /* border-color: #555555; */
-            }
-            .device-pill:hover {
-                /* box-shadow: 0 2px 5px rgba(255,255,255,0.1); */
-            }
-            .device-caption {
-                /* color: #b0b0b0; */
-            }
-            .device-import-group { /* Dark mode for mobile grouped element */
-                /* background-color: #333333; */
-                /* border-color: #555555; */
-            }
-            .device-section-title h2,
-            .device-section-title .subtitle {
-                /* color: #f5f5f7; */
-            }
+            /* ALL DARK MODE STYLES */
         }
 
         /* Features Section */
@@ -629,23 +744,83 @@
 
         /* Footer (optional, but good practice) */
         footer {
-            background-color: #fff;
+            background-color: #F7F8F9; /* Neutral light grey background */
             color: var(--medium-text);
             text-align: center;
-            padding: 5px 20px; /* Reduced padding again by 2 times */
+            padding: 20px 20px; /* Adjusted padding */
             border-top: 1px solid var(--border-color);
             box-shadow: 0 -2px 4px rgba(0,0,0,0.02);
             margin-top: auto; /* Pushes the footer to the bottom */
         }
 
-        footer p {
-            margin: 0;
-            line-height: 1em;
-            font-size: 10px; /* Reduced font size */
+        footer .container {
+            display: grid;
+            grid-template-columns: 1fr 1fr; /* Two columns for desktop */
+            gap: 40px; /* Space between columns */
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0; /* Remove container padding as padding is on footer itself */
+            align-items: flex-start;
+            text-align: left;
         }
 
-        footer .container {
-            padding: 5px 20px; /* Reduced vertical padding */
+        footer .footer-left {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        footer .footer-left .logo {
+            margin-bottom: 10px;
+        }
+
+        footer .footer-left p {
+            font-size: 14px; /* 14 px grey-600 */
+            color: #6e6e73; /* medium-text, which is grey-600 */
+            line-height: 1.5;
+            margin: 0;
+        }
+
+        footer .footer-right {
+            display: flex;
+            justify-content: flex-end; /* Align nav to the right */
+        }
+
+        footer .footer-nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px; /* Space between nav items */
+        }
+
+        footer .footer-nav ul li a {
+            font-size: 12px; /* 12 px tracking-wide */
+            letter-spacing: 0.05em; /* tracking-wide */
+            text-transform: uppercase; /* For a more distinct look */
+            text-decoration: none;
+            color: var(--medium-text);
+            transition: color 0.2s ease;
+        }
+
+        footer .footer-nav ul li a:hover {
+            color: var(--dark-text);
+        }
+
+        .footer-divider {
+            grid-column: 1 / -1; /* Span across both columns */
+            height: 1px;
+            background-color: #E5E7EB; /* Divider color */
+            margin: 20px 0;
+        }
+
+        .footer-bottom-bar {
+            grid-column: 1 / -1; /* Span across both columns */
+            text-align: center;
+            font-size: 10px;
+            color: var(--medium-text);
+            padding-top: 5px; /* Small padding above copyright */
         }
 
         /* Media queries for responsiveness */
@@ -751,7 +926,7 @@
                 justify-content: center;
             }
 
-            .features-container {
+            features-container {
                 display: flex; /* Change to flexbox for better centering on small screens */
                 flex-wrap: wrap;
                 justify-content: center; /* Center the flex items */
@@ -765,6 +940,21 @@
             .cta-buttons-container {
                 flex-direction: column;
                 gap: 15px; /* Vertical spacing for stacked buttons */
+            }
+
+            footer .container {
+                grid-template-columns: 1fr; /* Single column for mobile */
+                gap: 20px;
+                text-align: center; /* Center align all content */
+            }
+
+            footer .footer-left,
+            footer .footer-right {
+                align-items: center; /* Center items in stacked columns */
+            }
+
+            footer .footer-nav ul {
+                justify-content: center; /* Center nav links on mobile */
             }
         }
 
@@ -869,6 +1059,179 @@
             margin-top: 0;
             margin-bottom: 0;
         }
+
+        /* Insights Section */
+        .insights-section {
+            background-color: #fff;
+            padding: 80px 20px;
+            border-bottom: 1px solid var(--border-color);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            text-align: center;
+        }
+
+        .insights-section h2 {
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 40px;
+            color: var(--dark-text);
+        }
+
+        .insights-container {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start; /* Align items to the top */
+            gap: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .insights-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            flex: 2; /* Takes more space than the image */
+            text-align: left;
+        }
+
+        .insights-card {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 15px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.03);
+            transition: transform 0.3s ease, box-shadow 0.3s ease, opacity 0.6s ease, transform 0.6s ease;
+            opacity: 0; /* Hidden initially for animation */
+            transform: translateY(20px); /* Start slightly below for slide-in */
+        }
+
+        .insights-card.animate-in {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .insights-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 18px rgba(0,0,0,.04);
+        }
+
+        .insight-icon {
+            width: 48px;
+            height: 48px;
+            margin-bottom: 15px;
+            display: flex; /* Ensures centering */
+            align-items: center; /* Centers vertically */
+            justify-content: center; /* Centers horizontally */
+            opacity: 1; /* Make fully opaque to match title color */
+            color: var(--dark-text); /* Set color for currentColor in SVG */
+        }
+
+        .insight-icon.cross-analysis {
+            background-image: url('static/data-merge.svg'); /* Placeholder */
+        }
+        .insight-icon.proactive-nudges {
+            background-image: url('static/bell.svg'); /* Placeholder */
+        }
+        .insight-icon.evidence-based {
+            background-image: url('static/checkmark-book.svg'); /* Placeholder */
+        }
+        .insight-icon.private-by-design {
+            background-image: url('static/shield.svg'); /* Placeholder */
+        }
+
+
+        .insights-card h3 {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--dark-text);
+            margin-bottom: 10px;
+        }
+
+        .insights-card p {
+            font-size: 16px;
+            color: var(--medium-text);
+            line-height: 1.5;
+        }
+
+        .iphone-frame-container {
+            flex: 1; /* Takes less space than the grid */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .iphone-frame {
+            width: 300px; /* Example width */
+            height: 600px; /* Example height */
+            border: 12px solid #000;
+            border-radius: 40px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            overflow: hidden;
+            position: relative;
+            /* background-color: #000; */ /* For notch area */
+        }
+
+        .iphone-frame video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 28px; /* Inner radius for video */
+        }
+
+        @media (max-width: 1024px) {
+            .insights-container {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .insights-grid {
+                grid-template-columns: 1fr; /* Stack cards on tablet/mobile */
+                width: 100%;
+                max-width: 500px; /* Limit width of stacked cards */
+            }
+
+            .iphone-frame-container {
+                margin-top: 40px; /* Space between cards and video on mobile */
+            }
+        }
+
+        @media (max-width: 640px) {
+            .insights-section {
+                padding: 60px 20px;
+            }
+
+            .insights-section h2 {
+                font-size: 30px;
+                margin-bottom: 30px;
+            }
+
+            .insights-grid {
+                gap: 20px;
+            }
+
+            .insights-card {
+                padding: 25px;
+            }
+
+            .insight-icon {
+                width: 40px;
+                height: 40px;
+            }
+
+            .insights-card h3 {
+                font-size: 18px;
+            }
+
+            .insights-card p {
+                font-size: 15px;
+            }
+
+            .iphone-frame {
+                width: 250px;
+                height: 500px;
+                border-width: 10px;
+                border-radius: 30px;
+            }
+        }
     </style>
 </head>
 <!-- Google tag (gtag.js) -->
@@ -887,12 +1250,25 @@
                 <img src="static/heart.png" alt="TuneAI Logo">
                 TuneAI
             </a>
-            <nav>
-                <a href="https://docs.google.com/forms/d/e/1FAIpQLSdyG8oPrzNnDELY6bJm2wgoB6-_ai9oBvrmZNuCUf2GcG1cTw/viewform?usp=dialog" class="header-link" target="_blank">Early access</a>
+            <nav class="header-nav-right desktop-only">
                 <a href="contacts.html" class="header-link">Contacts</a>
+                <a href="https://docs.google.com/forms/d/e/1FAIpQLSdyG8oPrzNnDELY6bJm2wgoB6-_ai9oBvrmZNuCUf2GcG1cTw/viewform?usp=dialog" class="cta-header-button" target="_blank">Early access</a>
             </nav>
+            <button class="hamburger mobile-only" aria-label="Open navigation menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
         </div>
     </header>
+
+    <div class="mobile-nav-drawer">
+        <nav class="nav-links-mobile">
+            <a href="https://docs.google.com/forms/d/e/1FAIpQLSdyG8oPrzNnDELY6bJm2wgoB6-_ai9oBvrmZNuCUf2GcG1cTw/viewform?usp=dialog" class="header-link" target="_blank">Early access</a>
+            <a href="contacts.html" class="header-link">Contacts</a>
+        </nav>
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLSdsdnJk04RYjjaoRQhrRhROYIFL6R7A5xsjPTlGcozKxRu7mQ/viewform?usp=dialog" class="cta-header-button" target="_blank">Join waitlist</a>
+    </div>
 
     <main>
         <section class="hero">
@@ -1063,6 +1439,83 @@
             </p>
         </section>
 
+        <section class="insights-section">
+            <h2>Personalised insights</h2>
+            <div class="insights-container">
+                <div class="insights-grid">
+                    <div class="insights-card">
+                        <div class="insight-icon cross-analysis">
+                            <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                              <!-- left column -->
+                              <path d="M14 6v36" />
+                              <circle cx="14" cy="10" r="3" />
+                              <circle cx="14" cy="24" r="3" />
+                              <circle cx="14" cy="38" r="3" />
+                              <!-- right column -->
+                              <path d="M34 6v36" />
+                              <circle cx="34" cy="10" r="3" />
+                              <circle cx="34" cy="24" r="3" />
+                              <circle cx="34" cy="38" r="3" />
+                              <!-- merge arrows -->
+                              <path d="M14 24h8c6 0 6-14 12-14h0" />
+                              <polyline points="32 10 36 6 40 10" />
+                              <path d="M34 24h-8c-6 0-6 14-12 14h0" />
+                              <polyline points="16 38 12 42 8 38" />
+                            </svg>
+                        </div>
+                        <h3>One brain for all your metrics</h3>
+                        <p>Reads sleep, workouts, lab tests & more together instead of siloed dashboards</p>
+                    </div>
+                    <div class="insights-card">
+                        <div class="insight-icon proactive-nudges">
+                            <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                              <!-- bell body -->
+                              <path d="M24 6a10 10 0 0 0-10 10v6c0 4-2 6-4 8h28c-2-2-4-4-4-8v-6a10 10 0 0 0-10-10z" />
+                              <!-- clapper -->
+                              <circle cx="24" cy="40" r="3" />
+                              <!-- small "spark" for alert accent -->
+                              <line x1="24" y1="2" x2="24" y2="6" />
+                              <line x1="30" y1="4" x2="28" y2="8" />
+                              <line x1="18" y1="4" x2="20" y2="8" />
+                            </svg>
+                        </div>
+                        <h3>Insights before issues</h3>
+                        <p>Weekly digests & gentle reminders keep you on track—no doom-scrolling spreadsheets required.</p>
+                    </div>
+                    <div class="insights-card">
+                        <div class="insight-icon evidence-based">
+                            <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                              <!-- book block -->
+                              <rect x="10" y="10" width="20" height="28" rx="3" />
+                              <!-- spine overlap -->
+                              <path d="M10 14h20" />
+                              <!-- checkmark -->
+                              <polyline points="16 24 22 30 32 20" />
+                            </svg>
+                        </div>
+                        <h3>Science-backed answers</h3>
+                        <p>Every recommendation links to peer-reviewed research or established medical ranges.</p>
+                    </div>
+                    <div class="insights-card">
+                        <div class="insight-icon private-by-design">
+                            <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                              <!-- shield -->
+                              <path d="M24 6l15 6v10c0 11-7 17-15 22-8-5-15-11-15-22V12z"/>
+                              <!-TuneAI reads sleep, workouts- padlock -->
+                              <rect x="18" y="20" width="12" height="10" rx="2" />
+                              <path d="M22 20v-2a4 4 0 0 1 8 0v2" />
+                            </svg>
+                        </div>
+                        <h3>Your data stays on your phone</h3>
+                        <p>Health metrics & chat history are end-to-end encrypted and never leave your device.</p>
+                    </div>
+                </div>
+                <div class="iphone-frame-container">
+                        <img src="static/checkup.png" alt="TuneAI Insight Demo Placeholder" loading="lazy" style="width:100%; height:100%; object-fit:cover; border-radius: 28px;">
+                </div>
+            </div>
+        </section>
+
         <section class="features-section">
             <h2>Core features</h2>
             <div class="features-container">
@@ -1146,7 +1599,27 @@
 
     <footer>
         <div class="container">
-            <p>&copy; 2025 TuneAI. All rights reserved.</p>
+            <div class="footer-left">
+                <a href="/#" class="logo">
+                    <img src="static/heart.png" alt="TuneAI Logo">
+                    TuneAI
+                </a>
+                <p>Smarter decisions from your biology</p>
+            </div>
+            <div class="footer-right">
+                <nav class="footer-nav">
+                    <ul>
+                        <li><a href="#features-section">Features</a></li>
+                        <li><a href="#insights-section">How it works</a></li>
+                        <li><a href="#">Privacy</a></li>
+                        <li><a href="#">Terms</a></li>
+                    </ul>
+                </nav>
+            </div>
+            <div class="footer-divider"></div>
+            <div class="footer-bottom-bar">
+                <p>&copy; 2025 TuneAI. All rights reserved.</p>
+            </div>
         </div>
     </footer>
     <script>
@@ -1258,6 +1731,60 @@
                     deviceStripContainer.classList.add('animate-in');
                 }, 400); // 400ms delay for the animation
             }
+
+            // Header scroll behavior
+            const header = document.querySelector('header');
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 48) {
+                    header.classList.add('header-scrolled');
+                } else {
+                    header.classList.remove('header-scrolled');
+                }
+            });
+
+            // Mobile nav drawer functionality
+            const hamburger = document.querySelector('.hamburger');
+            const mobileNavDrawer = document.querySelector('.mobile-nav-drawer');
+
+            if (hamburger && mobileNavDrawer) {
+                hamburger.addEventListener('click', () => {
+                    hamburger.classList.toggle('open');
+                    mobileNavDrawer.classList.toggle('open');
+                });
+
+                // Close drawer when a link is clicked
+                mobileNavDrawer.querySelectorAll('a').forEach(link => {
+                    link.addEventListener('click', () => {
+                        hamburger.classList.remove('open');
+                        mobileNavDrawer.classList.remove('open');
+                    });
+                });
+            }
+        });
+    </script>
+    <script>
+        // Intersection Observer for insights cards fade-in animation
+        document.addEventListener('DOMContentLoaded', function() {
+            const insightsCards = document.querySelectorAll('.insights-card');
+
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.1
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('animate-in');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+
+            insightsCards.forEach(card => {
+                observer.observe(card);
+            });
         });
     </script>
 </body>
