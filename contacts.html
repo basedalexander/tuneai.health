@@ -14,10 +14,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary-blue: #0c8ef0;
-            --light-gray: #F5F5F7;
-            --dark-text: #1D1D1F;
-            --medium-text: #6e6e73;
+            --primary-blue: #0c8ef0; /* Apple Blue */
+            --light-gray: #F5F5F7; /* Light background gray */
+            --dark-text: #1D1D1F; /* Dark text for contrast */
+            --medium-text: #6e6e73; /* Medium gray for secondary text */
             --border-color: #D2D2D7;
         }
 
@@ -31,11 +31,12 @@
             display: flex;
             flex-direction: column;
             min-height: 100vh;
-            padding-top: 80px;
+            overflow-x: hidden; /* Prevent horizontal scrolling */
         }
 
-        main {
-            flex-grow: 1;
+        main { /* Added styles for the main content area */
+            margin-top: 64px; /* Push main content down by header height */
+            flex-grow: 1; /* Allow main to grow and push footer to bottom */
             display: flex;
             justify-content: center;
             align-items: center;
@@ -51,20 +52,35 @@
         /* Header */
         header {
             background-color: #fff;
-            padding: 0px 0;
-            border-bottom: 1px solid var(--border-color);
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-            position: fixed;
-            width: 100%;
-            top: 0;
-            left: 0;
-            z-index: 1000;
+            padding: 0; /* Ensure no padding to control height precisely */
+            border-bottom: none; /* Remove the horizontal rule */
+            box-shadow: none; /* Removed initial box-shadow to eliminate gray background */
+            position: fixed; /* Make header fixed */
+            width: 100%; /* Full width */
+            top: 0; /* Align to top */
+            left: 0; /* Align to left */
+            z-index: 1000; /* Ensure it's above other content */
+            height: 64px; /* Set fixed height for header */
+            display: flex; /* Use flexbox for centering content */
+            align-items: center; /* Vertically center content */
+            transition: background-color 0.3s ease, backdrop-filter 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .header-scrolled {
+            background-color: rgba(255, 255, 255, 0.8); /* bg-white/80 */
+            backdrop-filter: blur(8px); /* backdrop-blur-md */
+            -webkit-backdrop-filter: blur(8px); /* For Safari */
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1); /* Slightly more prominent shadow when scrolled */
         }
 
         header .container {
             display: flex;
             justify-content: space-between;
-            align-items: center;
+            align-items: center; /* Ensure vertical centering of content within the container */
+            max-width: 1280px; /* Set max-width for header container */
+            width: 100%; /* Ensure it takes full width within its parent */
+            margin: 0 auto; /* Center the container */
+            padding: 0 20px; /* Add horizontal padding */
         }
 
         .logo {
@@ -74,10 +90,15 @@
             font-size: 22px;
             color: var(--dark-text);
             text-decoration: none;
+            transition: transform 0.12s ease-out; /* Add transition for pulse effect */
+        }
+
+        .logo:hover {
+            transform: scale(1.05); /* Pulse effect on hover */
         }
 
         .logo img {
-            height: 40px;
+            height: 24px; /* Set logo height to 24px */
             margin-right: 10px;
         }
 
@@ -87,14 +108,1136 @@
             font-weight: 500;
             padding: 5px 10px;
             border-radius: 5px;
-            transition: background-color 0.1s ease, color 0.1s ease;
+            transition: background-color 0.1s ease, color 0.1s ease, text-decoration 0.2s ease; /* Add text-decoration to transition */
         }
 
         .header-link:hover {
-            background-color: transparent;
-            color: #0056b3;
+            background-color: transparent; /* Removed background color on hover */
+            color: #0056b3; /* Darker blue text on hover (blue-700) */
+            text-decoration: underline; /* Add underline on hover */
         }
 
+        .cta-header-button { /* New style for "Early access" button */
+            border: 1px solid #0c8ef0; /* Border = #0c8ef0 */
+            border-radius: 8px; /* 8 px rounding */
+            padding: 12px 20px; /* 12px vertical padding */
+            font-weight: 600;
+            background-color: transparent;
+            color: #0c8ef0; /* Same as border color */
+            text-decoration: none;
+            transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+        }
+
+        .cta-header-button:hover {
+            background-color: var(--primary-blue);
+            color: #fff;
+        }
+
+        .header-nav-right { /* New container for right cluster to manage spacing */
+            display: flex;
+            align-items: center;
+            gap: 24px; /* 24px spacing between "Early access" and "Contacts" */
+            justify-content: flex-end; /* Align items to the right */
+            /* Removed width: 100%; */
+        }
+
+        .hamburger {
+            display: none; /* Hidden by default, will be shown on mobile */
+            flex-direction: column;
+            justify-content: space-around; /* Re-added to space out hamburger lines */
+            width: 24px; /* Width of the hamburger icon */
+            height: 18px; /* Height of the hamburger icon */
+            cursor: pointer;
+            background: transparent;
+            border: none;
+            padding: 0;
+            z-index: 1001; /* Above header */
+            position: relative; /* Add relative positioning for absolute children */
+        }
+
+        .hamburger span {
+            display: block;
+            width: 100%;
+            height: 2px;
+            background-color: var(--dark-text);
+            border-radius: 2px;
+            transition: all 0.3s ease;
+            /* Removed absolute positioning and transforms from default state */
+        }
+
+        .hamburger.open span:nth-child(1) {
+            position: absolute; /* Apply absolute positioning when open */
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(45deg); /* Center and rotate */
+        }
+
+        .hamburger.open span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.open span:nth-child(3) {
+            position: absolute; /* Apply absolute positioning when open */
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-45deg); /* Center and rotate */
+        }
+
+        .mobile-nav-drawer {
+            display: none; /* Hidden by default */
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background-color: #fff;
+            z-index: 999;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 64px 20px 20px; /* Padding from top to account for header height */
+            box-sizing: border-box;
+            transform: translateY(-100%); /* Start off-screen */
+            transition: transform 0.3s ease-out;
+        }
+
+        .mobile-nav-drawer.open {
+            transform: translateY(0%); /* Slide in */
+            display: flex;
+        }
+
+        .mobile-nav-drawer .logo {
+            margin-bottom: 40px;
+        }
+
+        .mobile-nav-drawer .nav-links-mobile {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .mobile-nav-drawer .nav-links-mobile .header-link {
+            font-size: 24px;
+            padding: 10px 0;
+            color: var(--dark-text);
+        }
+
+        .mobile-nav-drawer .cta-header-button {
+            width: 100%;
+            max-width: 300px; /* Limit button width */
+            text-align: center;
+            padding: 15px 0;
+        }
+
+        /* Mobile specific display toggles for header elements */
+        @media (max-width: 768px) {
+            .header-nav-right.desktop-only {
+                display: none;
+            }
+            .hamburger.mobile-only {
+                display: flex;
+            }
+        }
+
+        /* Hero Section */
+        .hero {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            padding: 80px 20px 40px 20px; /* Reduced bottom padding to decrease distance from next section */
+            gap: 40px;
+            background-color: #fff;
+            border-bottom: 1px solid var(--border-color);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .hero-content {
+            max-width: 600px;
+        }
+
+        .hero-content h1 {
+            font-size: 48px;
+            font-weight: 700;
+            margin-bottom: 0px; /* Reduced further from -15px */
+            line-height: 1.1;
+        }
+
+        .hero-title-group {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .hero-main-icon {
+            height: 180px;
+            margin-bottom: 0px;
+        }
+
+        .hero-content p {
+            font-size: 16px;
+            color: var(--medium-text);
+            margin-bottom: 30px;
+        }
+
+        .app-store-button {
+            display: inline-block;
+            background-color: transparent;
+            color: var(--primary-blue);
+            padding: 10px 20px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-size: 18px;
+            font-weight: 600;
+            transition: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid var(--primary-blue);
+            cursor: default;
+            margin-bottom: 40px;
+            max-width: 300px; /* User specified max-width */
+            margin-left: auto; /* Center horizontally */
+            margin-right: auto; /* Center horizontally */
+        }
+
+        .app-store-button:hover {
+            /* Removed hover styles */
+        }
+
+        .app-store-badge-icon {
+            height: 50px;
+            width: auto;
+            margin-left: 10px; /* Added space to the left of the icon */
+        }
+
+        .hero-images {
+            display: flex;
+            flex-wrap: nowrap; /* Prevent wrapping on all slider resolutions */
+            overflow-x: scroll; /* Enable horizontal scrolling */
+            scroll-snap-type: x proximity; /* Smooth snapping behavior */
+            scroll-behavior: smooth; /* Smooth scrolling */
+            width: auto; /* Allow width to be determined by content */
+            max-width: 1100px; /* 3.5 images (300px each) + gaps: 3.5*300 + 2.5*20 = 1050 + 50 = 1100px */
+            margin: 0 auto; /* Center the container */
+            justify-content: flex-start; /* Align items to the start for scrolling */
+            gap: 20px; /* Add gap between images */
+            padding-left: 20px; /* Add padding to the start of the scrollable area */
+            scroll-padding-left: 20px; /* Ensure content snaps with padding */
+            -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+            -ms-overflow-style: none; /* Hide scrollbar for IE/Edge */
+            scrollbar-width: none; /* Hide scrollbar for Firefox */
+            position: relative; /* Keep for arrow positioning */
+            cursor: grab;
+        }
+
+        .hero-images.active {
+            cursor: grabbing;
+        }
+
+        .hero-images::-webkit-scrollbar {
+            display: none; /* Hide scrollbar for webkit browsers */
+        }
+
+        .hero-images img {
+            width: auto; /* Let flex-basis control width */
+            max-width: 300px; /* This will be the base for flex-basis */
+            height: auto; /* Allow height to adjust proportionally */
+            border-radius: 15px;
+            flex: 0 0 300px; /* Maintain initial width, height scales with it */
+            object-fit: contain; /* Ensure entire image is visible, no cropping */
+            scroll-snap-align: start; /* Snap to the start of each image */
+            margin-right: 0;
+        }
+
+        /* Mini-device Strip */
+        .device-strip-container {
+            background-color: #fff;
+            padding: 30px 20px; /* Adjust padding as needed */
+            text-align: center;
+            border-bottom: 1px solid var(--border-color);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            opacity: 0; /* Hidden initially for animation */
+            transform: translateY(20px); /* Start slightly below for slide-in */
+            transition: opacity 0.4s ease-out, transform 0.4s ease-out; /* Animation properties */
+            transition-delay: 0.4s; /* Delay after hero animation finishes */
+        }
+
+        .device-strip-container.animate-in {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .device-strip {
+            display: flex;
+            flex-direction: column; /* Stacks desktop/mobile layouts */
+            justify-content: center;
+            align-items: center; /* Center content horizontally */
+            margin-bottom: 20px; /* Space between strip and caption */
+        }
+
+        /* Desktop Specific Container for the Strip Content */
+        .device-strip-desktop {
+            display: flex;
+            flex-direction: column; /* Stacks logo row, separator, pill row */
+            gap: 20px; /* Gap between these rows */
+            justify-content: center;
+            align-items: center;
+            width: 100%; /* Ensure it takes full width to center its contents */
+        }
+
+        .device-logo-row {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 14px; /* Reduced gap between logos for desktop (~10-15% reduction from 16px) */
+        }
+
+        .device-separator-row {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 30px 0; /* Increased vertical padding around the plus for wider gap */
+        }
+
+        .device-pill-row {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px; /* Gap between pills for desktop */
+        }
+
+        /* Mobile Specific Container for the Strip Content */
+        .device-strip-mobile {
+            display: none; /* Hidden by default on desktop */
+            flex-direction: row; /* Change to row for wrapping on mobile */
+            flex-wrap: wrap; /* Allow items to wrap */
+            gap: 10px; /* Overall gap for mobile layout */
+            justify-content: center; /* Center items in rows */
+            width: 100%; /* Ensure it takes full width to center its contents */
+        }
+
+        .device-strip-item {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            color: var(--dark-text);
+        }
+
+        .device-logo img {
+            height: 120px; /* Logo size - increased to 3x */
+            width: auto;
+            filter: grayscale(100%) !important; /* Monochrome - reinforced */
+            opacity: 0.7; /* Subtle */
+            transition: opacity 0.2s ease, filter 0.2s ease; /* Add filter to transition */
+        }
+
+        .device-logo img:hover {
+            opacity: 1; /* Restore opacity on hover */
+            filter: grayscale(0%) !important; /* Restore natural color on hover */
+        }
+
+        .device-separator {
+            font-size: 20px; /* Adjusted size to 125% of body text (16px * 1.25 = 20px) */
+            font-weight: 500;
+            color: var(--medium-text); /* Same grey as pills */
+        }
+
+        .device-pill {
+            background-color: #ECECEC;
+            border-radius: 20px;
+            padding: 8px 15px; /* Adjusted side padding for more equal width */
+            font-size: 14px;
+            font-weight: 500;
+            white-space: nowrap;
+            transition: box-shadow 0.3s ease, transform 0.3s ease, border-color 0.3s ease;
+            border: 1px solid #DADADA; /* 1px stroke */
+            text-align: center;
+            display: flex; /* Make it a flex container to align icon and text */
+            flex-direction: column; /* Position icon on top of the text */
+            align-items: center;
+            justify-content: center; /* Center content horizontally */
+            gap: 0; /* Remove gap as margin handles spacing */
+        }
+
+        .pill-icon {
+            height: 40px; /* Make icon as big as in previous row */
+            width: auto;
+            filter: grayscale(100%) !important; /* Ensure monochrome */
+            opacity: 0.7; /* Subtle */
+            margin-bottom: 5px; /* Add margin to separate icon from text */
+            transition: opacity 0.2s ease, filter 0.2s ease; /* Add filter to transition */
+        }
+
+        .device-pill:hover .pill-icon {
+            opacity: 1; /* Restore opacity on hover */
+            filter: grayscale(0%) !important; /* Restore natural color on hover */
+        }
+
+        .device-pill:hover {
+            box-shadow: 0 2px 5px rgba(0,0,0,0.08);
+            transform: translateY(-2px); /* Subtle up-shift */
+        }
+
+        .device-caption {
+            font-size: 16px;
+            color: var(--medium-text);
+            max-width: 460px; /* Restricted width */
+            margin: 0 auto;
+        }
+
+        /* New styles for moved feature items */
+        .device-feature-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px; /* Matching flowchart-item font size */
+            font-weight: 500;
+            color: var(--dark-text);
+            text-decoration: none; /* Allow them to be links later */
+            background-color: #fff; /* Similar to flowchart-item background */
+            padding: 25px 30px; /* Similar to flowchart-item padding */
+            border-radius: 15px; /* Similar to flowchart-item border-radius */
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            border: 1px solid var(--border-color);
+            box-sizing: border-box;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .device-feature-item img {
+            width: 40px; /* Original flowchart-item icon size */
+            height: 40px; /* Original flowchart-item icon size */
+            margin-bottom: 10px; /* Space between icon and text */
+            filter: grayscale(100%) !important; /* Ensure monochrome */
+            opacity: 0.7; /* Subtle, consistent with logos */
+            transition: opacity 0.2s ease, filter 0.2s ease; /* Add filter to transition */
+        }
+
+        .device-feature-item:hover {
+            transform: translateY(-2px); /* Consistent hover with pills */
+            box-shadow: 0 5px 15px rgba(0,0,0,0.12); /* Slightly enhanced shadow on hover */
+        }
+
+        .device-feature-item:hover img {
+            opacity: 1; /* Restore opacity on hover */
+            filter: grayscale(0%) !important; /* Restore natural color on hover */
+        }
+
+        /* New container for data use items on desktop */
+        .device-use-data-row {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px; /* Gap between data use items */
+        }
+
+        .whoop-icon {
+            height: 20px; /* Smaller height specifically for Whoop icon on mobile */
+        }
+
+        /* Responsiveness */
+        @media (max-width: 640px) {
+            .hero-images {
+                gap: 10px; /* Smaller gap on mobile */
+                padding-left: 10px; /* Smaller padding on mobile */
+                scroll-padding-left: 10px;
+            }
+
+            .hero-images img {
+                flex: 0 0 calc(100% - 20px); /* Make images take full width minus padding */
+                max-width: unset; /* Remove max-width constraint */
+            }
+
+            .device-logo-row,
+            .device-pill-row,
+            .device-use-data-row { /* Apply gap reduction to new row */
+                gap: 10px; /* Mobile gap within rows (reduced from 14px) */
+            }
+
+            .device-strip-container {
+                padding: 20px;
+            }
+
+            .device-section-title {
+                text-align: center; /* Center-aligned on mobile */
+            }
+        }
+
+        @media (max-width: 480px) {
+            .desktop-only { display: none; }
+            .mobile-only { display: flex; }
+
+            .device-strip-item.device-logo,
+            .mobile-plus, /* Logos and the plus symbol */
+            .device-feature-item { /* New feature items on mobile */
+                flex: 1 1 calc(50% - 5px); /* Aim for 2 items per row, accounting for 10px gap */
+                max-width: calc(50% - 5px); /* Ensure max width for wrapping */
+                margin: 0; /* Reset margin as gap handles spacing */
+            }
+
+            .mobile-plus {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                flex: 1 1 100%; /* Force to new line by taking full width */
+                max-width: 100%; /* Ensure it takes full width */
+            }
+
+            .device-pills-mobile {
+                display: flex;
+                flex-direction: row;
+                justify-content: center; /* Center the pills */
+                align-items: center;
+                gap: 10px; /* Gap between CSV and PDF pills */
+                flex: 1 1 100%; /* Force to new row */
+                max-width: 100%; /* Ensure it takes full width */
+                margin-top: 10px; /* Space above this row */
+            }
+
+            .device-pills-mobile .device-pill {
+                padding: 8px 15px; /* Revert to standard pill padding */
+                font-size: 14px; /* Revert to standard pill font size */
+                gap: 5px; /* Ensure gap between icon and text on mobile */
+            }
+
+            /* New container for data use items on mobile */
+            .device-use-data-mobile {
+                display: flex;
+                flex-direction: row;
+                flex-wrap: wrap;
+                justify-content: center;
+                align-items: center;
+                gap: 10px; /* Gap between items */
+                flex: 1 1 100%; /* Force to new row */
+                max-width: 100%;
+                margin-top: 10px; /* Space above this row */
+            }
+        }
+
+        /* Dark Mode (Conceptual - need to define dark mode variables) */
+        @media (prefers-color-scheme: dark) {
+            /* ALL DARK MODE STYLES */
+        }
+
+        /* Features Section */
+        .features-section {
+            background-color: #ffffff;
+            padding: 20px 20px 80px 20px;
+            text-align: center;
+            border-bottom: 1px solid var(--border-color);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .features-section h2 {
+            font-size: 40px; /* Larger title for Apple style */
+            font-weight: 700;
+            margin-bottom: 60px; /* More space below the title */
+            color: var(--dark-text);
+        }
+
+        .features-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px; /* Increased gap for more breathing room */
+            padding: 20px 0;
+            max-width: 1000px; /* Constrain width for a cleaner look */
+            margin: 0 auto; /* Center the grid */
+        }
+
+        .feature-item {
+            background-color: #ffffff; /* Pure white background for cards */
+            padding: 40px 30px; /* More padding inside cards */
+            border-radius: 18px; /* More rounded corners */
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08), 0 15px 30px rgba(0, 0, 0, 0.05); /* Softer, multi-layered shadow */
+            text-align: center; /* Center align content within cards */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transition for hover */
+        }
+
+        .feature-item:hover {
+            transform: translateY(-5px); /* Lift effect on hover */
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12), 0 20px 40px rgba(0, 0, 0, 0.08); /* Enhanced shadow on hover */
+        }
+
+        .feature-item h3 {
+            font-size: 24px; /* Larger feature title */
+            font-weight: 600; /* Slightly less bold than section title */
+            margin-top: 20px; /* Space between icon and title */
+            margin-bottom: 10px;
+            color: var(--dark-text);
+        }
+
+        .feature-item p {
+            font-size: 17px; /* Slightly larger paragraph text */
+            color: var(--medium-text);
+            line-height: 1.6;
+        }
+
+        .feature-icon {
+            margin-bottom: 10px; /* Space below the icon */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 48px; /* Set a consistent size for the icon container */
+            height: 48px;
+            /* background-color: var(--primary-blue); For testing icon background */
+            border-radius: 50%; /* If a circular background is desired */
+        }
+
+        .feature-icon svg {
+            width: 32px; /* Size of the SVG icon */
+            height: 32px;
+            fill: var(--dark-text); /* Ensure the icon color matches the text */
+        }
+
+        /* Call to Action Section */
+        .cta-section {
+            background-color: var(--primary-blue);
+            color: #fff;
+            padding: 80px 20px;
+            text-align: center;
+        }
+
+        .cta-section h2 {
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .cta-section p {
+            font-size: 20px;
+            margin-bottom: 40px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta-buttons-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px; /* Adjust this value for desired horizontal spacing */
+        }
+
+        .cta-button {
+            background-color: #fff;
+            color: var(--primary-blue);
+            padding: 18px 40px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-size: 20px;
+            font-weight: 700;
+            transition: background-color 0.2s ease, color 0.2s ease;
+        }
+
+        .cta-button:hover {
+            background-color: #fcf8f2; /* Changed hover background color as requested */
+            color: var(--primary-blue); /* Changed text color to primary blue on hover for contrast */
+        }
+
+        /* Footer (optional, but good practice) */
+        footer {
+            background-color: #F7F8F9; /* Neutral light grey background */
+            color: var(--medium-text);
+            text-align: center;
+            padding: 20px 20px; /* Adjusted padding */
+            border-top: 1px solid var(--border-color);
+            box-shadow: 0 -2px 4px rgba(0,0,0,0.02);
+            margin-top: auto; /* Pushes the footer to the bottom */
+        }
+
+        footer .container {
+            display: grid;
+            grid-template-columns: 1fr 1fr; /* Two columns for desktop */
+            gap: 40px; /* Space between columns */
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0; /* Remove container padding as padding is on footer itself */
+            align-items: flex-start;
+            text-align: left;
+        }
+
+        footer .footer-left {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        footer .footer-left .logo {
+            margin-bottom: 10px;
+        }
+
+        footer .footer-left p {
+            font-size: 14px; /* 14 px grey-600 */
+            color: #6e6e73; /* medium-text, which is grey-600 */
+            line-height: 1.5;
+            margin: 0;
+        }
+
+        footer .footer-right {
+            display: flex;
+            justify-content: flex-end; /* Align nav to the right */
+        }
+
+        footer .footer-nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px; /* Space between nav items */
+        }
+
+        footer .footer-nav ul li a {
+            font-size: 12px; /* 12 px tracking-wide */
+            letter-spacing: 0.05em; /* tracking-wide */
+            text-transform: uppercase; /* For a more distinct look */
+            text-decoration: none;
+            color: var(--medium-text);
+            transition: color 0.2s ease;
+        }
+
+        footer .footer-nav ul li a:hover {
+            color: var(--dark-text);
+        }
+
+        .footer-divider {
+            grid-column: 1 / -1; /* Span across both columns */
+            height: 1px;
+            background-color: #E5E7EB; /* Divider color */
+            margin: 20px 0;
+        }
+
+        .footer-bottom-bar {
+            grid-column: 1 / -1; /* Span across both columns */
+            text-align: center;
+            font-size: 10px;
+            color: var(--medium-text);
+            padding-top: 5px; /* Small padding above copyright */
+        }
+
+        /* Media queries for responsiveness */
+        @media (max-width: 1024px) {
+            .hero-images {
+                max-width: 780px; /* 2.5 images (300px each) + gaps: 2.5*300 + 1.5*20 = 750 + 30 = 780px */
+            }
+            .hero-images img {
+                flex: 0 0 300px; /* Maintain initial width, height scales with it */
+                height: auto; /* Allow height to adjust proportionally */
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero {
+                flex-direction: column; /* Stack content and images vertically */
+                padding: 60px 20px; /* Adjust padding for mobile */
+            }
+            .hero-content {
+                text-align: center;
+                margin-bottom: 40px; /* Space between content and images */
+            }
+
+            .hero-title-group {
+                flex-direction: column;
+                align-items: center;
+            }
+            .hero-main-icon {
+                height: 180px;
+                margin-bottom: 0px;
+            }
+
+            .hero-content h1 {
+                font-size: 44px;
+                margin-top: 10px; /* Adjust margin to bring title closer */
+                margin-bottom: -20px;
+            }
+            .hero-content p {
+                font-size: 18px;
+            }
+
+            .app-store-button {
+                margin-bottom: 0px; /* Reduced space below the button for mobile */
+            }
+
+            .hero-images {
+                width: 100%; /* Full width for mobile slider */
+                max-width: unset; /* Remove max-width constraint */
+                padding-left: 20px; /* Maintain padding for peeking effect */
+                scroll-padding-left: 20px; /* Maintain scroll padding for peeking effect */
+                gap: 10px; /* Revert gap for mobile */
+            }
+
+            .hero-images img {
+                flex: 0 0 calc((100% / 1.5) - (10px * (1.5 - 1) / 1.5)); /* Revert flex calculation for mobile */
+                width: auto; /* Let flex control width */
+                height: 550px; /* Revert height for mobile images */
+                object-fit: contain; /* Ensure entire image is visible */
+                scroll-snap-align: start;
+                max-width: unset;
+                margin-right: 0;
+            }
+
+            .flowchart-section {
+                padding: 20px 20px 80px 20px;
+            }
+
+            .flowchart-section h2, .cta-section h2 {
+                font-size: 28px;
+            }
+
+            .flowchart-diagram {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .flowchart-item {
+                /* width: 100%; */ /* Removed full width on mobile */
+                max-width: 300px; /* Set a max-width for better mobile appearance */
+                margin-bottom: 20px; /* Space between vertical items */
+                align-self: center; /* Center content within item */
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            .flowchart-data-column {
+                /* width: 100%; */ /* Removed full width on mobile */
+                max-width: 300px; /* Set a max-width for better mobile appearance */
+                margin: 0 auto;
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+                justify-content: center;
+            }
+
+            .flowchart-arrow {
+                transform: rotate(90deg);
+                margin: 20px 0;
+            }
+
+            .flowchart-item.column-2 .flowchart-data-column {
+                align-items: center; /* Center content in second column on mobile */
+                justify-content: center;
+            }
+
+            features-container {
+                display: flex; /* Change to flexbox for better centering on small screens */
+                flex-wrap: wrap;
+                justify-content: center; /* Center the flex items */
+                padding: 20px 20px 80px 20px; /* Reduced top padding, and added bottom padding */
+            }
+            .feature-item {
+                width: 90%; /* Give cards a percentage width to ensure spacing */
+                max-width: 350px; /* Max width for individual cards */
+                margin: 0 auto 20px auto; /* Center horizontally with auto margins and add bottom margin */
+            }
+            .cta-buttons-container {
+                flex-direction: column;
+                gap: 15px; /* Vertical spacing for stacked buttons */
+            }
+
+            footer .container {
+                grid-template-columns: 1fr; /* Single column for mobile */
+                gap: 20px;
+                text-align: center; /* Center align all content */
+            }
+
+            footer .footer-left,
+            footer .footer-right {
+                align-items: center; /* Center items in stacked columns */
+                justify-content: center; /* Center content horizontally within footer-right */
+            }
+
+            footer .footer-nav ul {
+                justify-content: center; /* Center nav links on mobile */
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero {
+                padding: 40px 15px;
+            }
+            .hero-content h1 {
+                font-size: 30px;
+            }
+            .hero-content p {
+                font-size: 16px;
+            }
+            .app-store-button, .cta-button {
+                padding: 12px 25px;
+                font-size: 16px;
+            }
+            .flowchart-item {
+                font-size: 16px;
+                padding: 20px;
+            }
+            .cta-section p {
+                font-size: 16px;
+            }
+            .feature-item {
+                /* max-width: 100%; Removed to allow 90% width from larger breakpoint to apply */
+            }
+        }
+
+        .video-section {
+            background-color: var(--light-gray);
+            padding: 40px 20px 80px 20px;
+            text-align: center;
+            border-bottom: 1px solid var(--border-color);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .video-section h2 {
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 40px;
+            color: var(--dark-text);
+        }
+
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            height: 0;
+            overflow: hidden;
+            max-width: 700px; /* Reduced max-width for smaller video preview on desktop */
+            margin: 0 auto;
+            border-radius: 18px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08), 0 15px 30px rgba(0, 0, 0, 0.05);
+        }
+
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 18px;
+        }
+
+        @media (max-width: 768px) {
+            .video-section {
+                padding: 10px 20px 80px 20px; /* Reduced top padding, kept desktop bottom padding */
+            }
+            .video-section h2 {
+                font-size: 28px;
+            }
+        }
+
+        .desktop-only { display: block; }
+        .mobile-only { display: none; }
+
+        @media (max-width: 480px) {
+            .desktop-only { display: none; }
+            .mobile-only { display: flex; /* Or block, depending on internal layout */ }
+        }
+
+        .device-section-title {
+            text-align: center; /* Centered for all screen sizes */
+            margin-bottom: 60px; /* Increased margin for more space */
+            max-width: 1200px; /* Constrain width to main container */
+            margin-left: auto; /* Center horizontally */
+            margin-right: auto; /* Center horizontally */
+        }
+
+        .device-section-title h2 {
+            font-size: 40px; /* Same as Core Features heading */
+            font-weight: 700;
+            color: var(--dark-text);
+            margin-bottom: 5px; /* Small gap between title and subtitle */
+            line-height: 1.1;
+        }
+
+        .device-section-title .subtitle {
+            font-size: 18px; /* Slightly smaller than main title */
+            font-weight: 400; /* Regular weight */
+            color: var(--medium-text);
+            margin-top: 0;
+            margin-bottom: 0;
+        }
+
+        /* Insights Section */
+        .insights-section {
+            background-color: #fff;
+            padding: 80px 20px;
+            border-bottom: 1px solid var(--border-color);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            text-align: center;
+        }
+
+        .insights-section h2 {
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 40px;
+            color: var(--dark-text);
+        }
+
+        .insights-container {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start; /* Align items to the top */
+            gap: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .insights-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            flex: 2; /* Takes more space than the image */
+            text-align: left;
+        }
+
+        .insights-card {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 15px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.03);
+            transition: transform 0.3s ease, box-shadow 0.3s ease, opacity 0.6s ease, transform 0.6s ease;
+            opacity: 0; /* Hidden initially for animation */
+            transform: translateY(20px); /* Start slightly below for slide-in */
+        }
+
+        .insights-card.animate-in {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .insights-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 18px rgba(0,0,0,.04);
+        }
+
+        .insight-icon {
+            width: 48px;
+            height: 48px;
+            margin-bottom: 15px;
+            display: flex; /* Ensures centering */
+            align-items: center; /* Centers vertically */
+            justify-content: center; /* Centers horizontally */
+            opacity: 1; /* Make fully opaque to match title color */
+            color: var(--dark-text); /* Set color for currentColor in SVG */
+        }
+
+        .insight-icon.cross-analysis {
+            background-image: url('static/data-merge.svg'); /* Placeholder */
+        }
+        .insight-icon.proactive-nudges {
+            background-image: url('static/bell.svg'); /* Placeholder */
+        }
+        .insight-icon.evidence-based {
+            background-image: url('static/checkmark-book.svg'); /* Placeholder */
+        }
+        .insight-icon.private-by-design {
+            background-image: url('static/shield.svg'); /* Placeholder */
+        }
+
+
+        .insights-card h3 {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--dark-text);
+            margin-bottom: 10px;
+        }
+
+        .insights-card p {
+            font-size: 16px;
+            color: var(--medium-text);
+            line-height: 1.5;
+        }
+
+        .iphone-frame-container {
+            flex: 1; /* Takes less space than the grid */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .iphone-frame {
+            width: 300px; /* Example width */
+            height: 600px; /* Example height */
+            border: 12px solid #000;
+            border-radius: 40px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            overflow: hidden;
+            position: relative;
+            /* background-color: #000; */ /* For notch area */
+        }
+
+        .iphone-frame video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 28px; /* Inner radius for video */
+        }
+
+        @media (max-width: 1024px) {
+            .insights-container {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .insights-grid {
+                grid-template-columns: 1fr; /* Stack cards on tablet/mobile */
+                width: 100%;
+                max-width: 500px; /* Limit width of stacked cards */
+            }
+
+            .iphone-frame-container {
+                margin-top: 40px; /* Space between cards and video on mobile */
+            }
+        }
+
+        @media (max-width: 640px) {
+            .insights-section {
+                padding: 60px 20px;
+            }
+
+            .insights-section h2 {
+                font-size: 30px;
+                margin-bottom: 30px;
+            }
+
+            .insights-grid {
+                gap: 20px;
+            }
+
+            .insights-card {
+                padding: 25px;
+            }
+
+            .insight-icon {
+                width: 40px;
+                height: 40px;
+            }
+
+            .insights-card h3 {
+                font-size: 18px;
+            }
+
+            .insights-card p {
+                font-size: 15px;
+            }
+
+            .iphone-frame {
+                width: 250px;
+                height: 500px;
+                border-width: 10px;
+                border-radius: 30px;
+            }
+        }
+
+        /* Contact Card specific styles - PRESERVED */
         .contact-card {
             background-color: #ffffff;
             padding: 40px 60px;
@@ -102,7 +1245,7 @@
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08), 0 15px 30px rgba(0, 0, 0, 0.05);
             text-align: center;
             max-width: 500px;
-            margin: auto; /* Center horizontally and vertically using flexbox on main */
+            margin: auto;
             box-sizing: border-box;
         }
 
@@ -135,27 +1278,6 @@
                 padding: 30px;
             }
         }
-
-        /* Footer (optional, but good practice) */
-        footer {
-            background-color: #fff;
-            color: var(--medium-text);
-            text-align: center;
-            padding: 5px 20px; /* Reduced padding again by 2 times to match index.html */
-            border-top: 1px solid var(--border-color);
-            box-shadow: 0 -2px 4px rgba(0,0,0,0.02);
-            margin-top: auto; /* Pushes footer to the bottom */
-        }
-
-        footer p {
-            margin: 0;
-            line-height: 1em;
-            font-size: 10px; /* Reduced font size to match index.html */
-        }
-
-        footer .container {
-            padding: 0px 20px; /* Adjust padding within the container */
-        }
     </style>
 </head>
 <!-- Google tag (gtag.js) -->
@@ -174,25 +1296,96 @@
                 <img src="static/heart.png" alt="TuneAI Logo">
                 TuneAI
             </a>
-            <nav>
-                <a href="https://docs.google.com/forms/d/e/1FAIpQLSdyG8oPrzNnDELY6bJm2wgoB6-_ai9oBvrmZNuCUf2GcG1cTw/viewform?usp=dialog" class="header-link" target="_blank">Early access</a>
+            <nav class="header-nav-right desktop-only">
                 <a href="contacts.html" class="header-link">Contacts</a>
+                <a href="https://docs.google.com/forms/d/e/1FAIpQLSdyG8oPrzNnDELY6bJm2wgoB6-_ai9oBvrmZNuCUf2GcG1cTw/viewform?usp=dialog" class="cta-header-button" target="_blank">Early access</a>
             </nav>
+            <button class="hamburger mobile-only" aria-label="Open navigation menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
         </div>
     </header>
 
+    <div class="mobile-nav-drawer">
+        <nav class="nav-links-mobile">
+            <a href="https://docs.google.com/forms/d/e/1FAIpQLSdyG8oPrzNnDELY6bJm2wgoB6-_ai9oBvrmZNuCUf2GcG1cTw/viewform?usp=dialog" class="header-link" target="_blank">Early access</a>
+            <a href="contacts.html" class="header-link">Contacts</a>
+        </nav>
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLSdsdnJk04RYjjaoRQhrRhROYIFL6R7A5xsjPTlGcozKxRu7mQ/viewform?usp=dialog" class="cta-header-button" target="_blank">Join waitlist</a>
+    </div>
+
     <main>
-        <div class="contact-card">
-            <h1>Contact Us</h1>
-            <p><a href="mailto:hello@tuneai.health">hello@tuneai.health</a></p>
-            <div style="text-align: center; margin-top: 20px;"><a href="https://x.com/tuneaihealth" target="_blank"><img src="static/x-com.png" alt="TuneAI on X" style="height: 55px;"></a></div>
-        </div>
+        <section class="contact-section">
+            <div class="contact-card">
+                <h1>Contact us</h1>
+                <p> <a href="mailto:helllo@tuneai.health">helllo@tuneai.health</a></p>
+                <p style="text-align: center; margin-top: 20px;">
+                    <a href="https://x.com/tuneaihealth" target="_blank" style="display: inline-block; text-decoration: none;">
+                        <img src="static/x-com.png" alt="X (formerly Twitter)" style="width: 48px; height: 48px;">
+                    </a>
+                </p>
+            </div>
+        </section>
     </main>
 
     <footer>
         <div class="container">
-            <p>&copy; 2025 TuneAI. All rights reserved.</p>
+            <div class="footer-left">
+                <a href="index.html" class="logo">
+                    <img src="static/heart.png" alt="TuneAI Logo">
+                    TuneAI
+                </a>
+                <p>Smarter decisions from your biology</p>
+            </div>
+            <div class="footer-right">
+                <nav class="footer-nav">
+                    <ul>
+                        <li><a href="#">Features</a></li>
+                        <li><a href="#">How it works</a></li>
+                        <li><a href="#">Privacy</a></li>
+                        <li><a href="#">Terms</a></li>
+                    </ul>
+                </nav>
+            </div>
+            <div class="footer-divider"></div>
+            <div class="footer-bottom-bar">
+                <p>&copy; 2025 TuneAI. All rights reserved.</p>
+            </div>
         </div>
     </footer>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Header scroll behavior
+            const header = document.querySelector('header');
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 48) {
+                    header.classList.add('header-scrolled');
+                } else {
+                    header.classList.remove('header-scrolled');
+                }
+            });
+
+            // Mobile nav drawer functionality
+            const hamburger = document.querySelector('.hamburger');
+            const mobileNavDrawer = document.querySelector('.mobile-nav-drawer');
+
+            if (hamburger && mobileNavDrawer) {
+                hamburger.addEventListener('click', () => {
+                    hamburger.classList.toggle('open');
+                    mobileNavDrawer.classList.toggle('open');
+                });
+
+                // Close drawer when a link is clicked
+                mobileNavDrawer.querySelectorAll('a').forEach(link => {
+                    link.addEventListener('click', () => {
+                        hamburger.classList.remove('open');
+                        mobileNavDrawer.classList.remove('open');
+                    });
+                });
+            }
+        });
+    </script>
 </body>
 </html> 
