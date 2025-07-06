@@ -201,84 +201,282 @@
             margin-right: 0;
         }
 
-        /* Flowchart Section */
-        .flowchart-section {
-            background-color: var(--light-gray);
-            padding: 20px 20px 80px 20px; /* Increased bottom padding */
+        /* Mini-device Strip */
+        .device-strip-container {
+            background-color: #fff;
+            padding: 30px 20px; /* Adjust padding as needed */
             text-align: center;
             border-bottom: 1px solid var(--border-color);
             box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            opacity: 0; /* Hidden initially for animation */
+            transform: translateY(20px); /* Start slightly below for slide-in */
+            transition: opacity 0.4s ease-out, transform 0.4s ease-out; /* Animation properties */
+            transition-delay: 0.4s; /* Delay after hero animation finishes */
         }
 
-        .flowchart-section h2 {
-            font-size: 36px;
-            font-weight: 700;
-            margin-bottom: 40px;
-            text-align: center;
+        .device-strip-container.animate-in {
+            opacity: 1;
+            transform: translateY(0);
         }
 
-        .flowchart-diagram {
+        .device-strip {
             display: flex;
+            flex-direction: column; /* Stacks desktop/mobile layouts */
+            justify-content: center;
+            align-items: center; /* Center content horizontally */
+            margin-bottom: 20px; /* Space between strip and caption */
+        }
+
+        /* Desktop Specific Container for the Strip Content */
+        .device-strip-desktop {
+            display: flex;
+            flex-direction: column; /* Stacks logo row, separator, pill row */
+            gap: 20px; /* Gap between these rows */
+            justify-content: center;
+            align-items: center;
+            width: 100%; /* Ensure it takes full width to center its contents */
+        }
+
+        .device-logo-row {
+            display: flex;
+            justify-content: center;
+            align-items: center;
             flex-wrap: wrap;
-            justify-content: center;
-            align-items: flex-start; /* Align items to the top */
-            gap: 20px;
+            gap: 14px; /* Reduced gap between logos for desktop (~10-15% reduction from 16px) */
         }
 
-        .flowchart-item {
-            background-color: #fff;
-            padding: 25px 30px;
-            border-radius: 15px;
+        .device-separator-row {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 30px 0; /* Increased vertical padding around the plus for wider gap */
+        }
+
+        .device-pill-row {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px; /* Gap between pills for desktop */
+        }
+
+        /* Mobile Specific Container for the Strip Content */
+        .device-strip-mobile {
+            display: none; /* Hidden by default on desktop */
+            flex-direction: row; /* Change to row for wrapping on mobile */
+            flex-wrap: wrap; /* Allow items to wrap */
+            gap: 10px; /* Overall gap for mobile layout */
+            justify-content: center; /* Center items in rows */
+            width: 100%; /* Ensure it takes full width to center its contents */
+        }
+
+        .device-strip-item {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            color: var(--dark-text);
+        }
+
+        .device-logo img {
+            height: 120px; /* Logo size - increased to 3x */
+            width: auto;
+            filter: grayscale(100%) !important; /* Monochrome - reinforced */
+            opacity: 0.7; /* Subtle */
+            transition: opacity 0.2s ease;
+        }
+
+        .device-logo img:hover {
+            opacity: 1; /* Restore opacity on hover */
+        }
+
+        .device-separator {
+            font-size: 20px; /* Adjusted size to 125% of body text (16px * 1.25 = 20px) */
+            font-weight: 500;
+            color: var(--medium-text); /* Same grey as pills */
+        }
+
+        .device-pill {
+            background-color: #ECECEC;
+            border-radius: 20px;
+            padding: 8px 15px; /* Adjusted side padding for more equal width */
+            font-size: 14px;
+            font-weight: 500;
+            white-space: nowrap;
+            transition: box-shadow 0.3s ease, transform 0.3s ease, border-color 0.3s ease;
+            border: 1px solid #DADADA; /* 1px stroke */
+            text-align: center;
+            display: flex; /* Make it a flex container to align icon and text */
+            flex-direction: column; /* Position icon on top of the text */
+            align-items: center;
+            justify-content: center; /* Center content horizontally */
+            gap: 0; /* Remove gap as margin handles spacing */
+        }
+
+        .pill-icon {
+            height: 40px; /* Make icon as big as in previous row */
+            width: auto;
+            filter: grayscale(100%) !important; /* Ensure monochrome */
+            opacity: 0.7; /* Subtle */
+            margin-bottom: 5px; /* Add margin to separate icon from text */
+        }
+
+        .device-pill:hover {
+            box-shadow: 0 2px 5px rgba(0,0,0,0.08);
+            transform: translateY(-2px); /* Subtle up-shift */
+        }
+
+        .device-caption {
+            font-size: 16px;
+            color: var(--medium-text);
+            max-width: 460px; /* Restricted width */
+            margin: 0 auto;
+        }
+
+        /* New styles for moved feature items */
+        .device-feature-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px; /* Matching flowchart-item font size */
+            font-weight: 500;
+            color: var(--dark-text);
+            text-decoration: none; /* Allow them to be links later */
+            background-color: #fff; /* Similar to flowchart-item background */
+            padding: 25px 30px; /* Similar to flowchart-item padding */
+            border-radius: 15px; /* Similar to flowchart-item border-radius */
             box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-            border: 1px solid var(--border-color); /* Add a subtle border */
-            font-size: 18px;
-            font-weight: 500;
-            color: var(--dark-text);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-width: 180px;
-            height: 120px;
+            border: 1px solid var(--border-color);
             box-sizing: border-box;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
-        .flowchart-item img {
-            width: 40px; /* Adjust as needed */
-            height: 40px; /* Adjust as needed */
+        .device-feature-item img {
+            width: 40px; /* Original flowchart-item icon size */
+            height: 40px; /* Original flowchart-item icon size */
             margin-bottom: 10px; /* Space between icon and text */
+            filter: grayscale(100%) !important; /* Ensure monochrome */
+            opacity: 0.7; /* Subtle, consistent with logos */
         }
 
-        .flowchart-arrow {
-            font-size: 50px;
-            color: var(--primary-blue);
-            margin: 0 10px;
-            font-weight: 700;
+        .device-feature-item:hover {
+            transform: translateY(-2px); /* Consistent hover with pills */
+            box-shadow: 0 5px 15px rgba(0,0,0,0.12); /* Slightly enhanced shadow on hover */
         }
 
-        .flowchart-data-column {
+        /* New container for data use items on desktop */
+        .device-use-data-row {
             display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-        }
-
-        .data-point-item {
-            display: flex;
+            justify-content: center;
             align-items: center;
-            justify-content: flex-start;
-            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 20px; /* Gap between data use items */
         }
 
-        .data-point-item img {
-            width: 40px; /* Re-applied specific size for these icons */
-            height: 40px; /* Re-applied specific size for these icons */
-            margin-right: 10px; /* Re-applied specific margin for these icons */
+        /* Responsiveness */
+        @media (max-width: 640px) {
+            .device-logo-row,
+            .device-pill-row,
+            .device-use-data-row { /* Apply gap reduction to new row */
+                gap: 10px; /* Mobile gap within rows (reduced from 14px) */
+            }
+
+            .device-strip-container {
+                padding: 20px;
+            }
+
+            .device-section-title {
+                text-align: center; /* Center-aligned on mobile */
+            }
         }
 
-        .data-point-item span {
-            font-size: 18px;
-            font-weight: 500;
-            color: var(--dark-text);
+        @media (max-width: 480px) {
+            .desktop-only { display: none; }
+            .mobile-only { display: flex; }
+
+            .device-strip-item.device-logo,
+            .mobile-plus, /* Logos and the plus symbol */
+            .device-feature-item { /* New feature items on mobile */
+                flex: 1 1 calc(50% - 5px); /* Aim for 2 items per row, accounting for 10px gap */
+                max-width: calc(50% - 5px); /* Ensure max width for wrapping */
+                margin: 0; /* Reset margin as gap handles spacing */
+            }
+
+            .mobile-plus {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+
+            .device-pills-mobile {
+                display: flex;
+                flex-direction: row;
+                justify-content: center; /* Center the pills */
+                align-items: center;
+                gap: 10px; /* Gap between CSV and PDF pills */
+                flex: 1 1 100%; /* Force to new row */
+                max-width: 100%; /* Ensure it takes full width */
+                margin-top: 10px; /* Space above this row */
+            }
+
+            .device-pills-mobile .device-pill {
+                padding: 8px 15px; /* Revert to standard pill padding */
+                font-size: 14px; /* Revert to standard pill font size */
+                gap: 5px; /* Ensure gap between icon and text on mobile */
+            }
+
+            /* New container for data use items on mobile */
+            .device-use-data-mobile {
+                display: flex;
+                flex-direction: row;
+                flex-wrap: wrap;
+                justify-content: center;
+                align-items: center;
+                gap: 10px; /* Gap between items */
+                flex: 1 1 100%; /* Force to new row */
+                max-width: 100%;
+                margin-top: 10px; /* Space above this row */
+            }
+        }
+
+        /* Dark Mode (Conceptual - need to define dark mode variables) */
+        @media (prefers-color-scheme: dark) {
+            .device-strip-container {
+                background-color: #1c1c1e;
+                border-color: #38383a;
+                box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            }
+            .device-strip-item,
+            .device-feature-item { /* Apply dark mode to new feature items */
+                color: #f5f5f7;
+            }
+            .device-logo img,
+            .device-feature-item img { /* Apply dark mode to new feature item images */
+                filter: invert(100%) grayscale(100%) brightness(0.8) !important;
+            }
+            .device-separator {
+                color: #b0b0b0;
+            }
+            .device-pill {
+                background-color: #333333;
+                color: #f5f5f7;
+                border-color: #555555;
+            }
+            .device-pill:hover {
+                box-shadow: 0 2px 5px rgba(255,255,255,0.1);
+            }
+            .device-caption {
+                color: #b0b0b0;
+            }
+            .device-import-group { /* Dark mode for mobile grouped element */
+                background-color: #333333;
+                border-color: #555555;
+            }
+            .device-section-title h2,
+            .device-section-title .subtitle {
+                color: #f5f5f7;
+            }
         }
 
         /* Features Section */
@@ -608,6 +806,39 @@
                 font-size: 28px;
             }
         }
+
+        .desktop-only { display: block; }
+        .mobile-only { display: none; }
+
+        @media (max-width: 480px) {
+            .desktop-only { display: none; }
+            .mobile-only { display: flex; /* Or block, depending on internal layout */ }
+        }
+
+        .device-section-title {
+            text-align: center; /* Centered for all screen sizes */
+            margin-bottom: 24px; /* Margin before the logo strip */
+            max-width: 1200px; /* Constrain width to main container */
+            margin-left: auto; /* Center horizontally */
+            margin-right: auto; /* Center horizontally */
+            padding: 0 20px; /* Match container padding */
+        }
+
+        .device-section-title h2 {
+            font-size: 40px; /* Same as Core Features heading */
+            font-weight: 700;
+            color: var(--dark-text);
+            margin-bottom: 5px; /* Small gap between title and subtitle */
+            line-height: 1.1;
+        }
+
+        .device-section-title .subtitle {
+            font-size: 18px; /* Slightly smaller than main title */
+            font-weight: 400; /* Regular weight */
+            color: var(--medium-text);
+            margin-top: 0;
+            margin-bottom: 0;
+        }
     </style>
 </head>
 <!-- Google tag (gtag.js) -->
@@ -663,41 +894,143 @@
             </div>
         </section>
 
-        <section class="flowchart-section">
-            <h2>Put your data to use</h2>
-            <div class="flowchart-diagram">
-                <div class="flowchart-data-column">
-                    <div class="data-point-item">
-                        <img src="static/notes_icon.svg" alt="Your goals icon">
-                        <span>Goals, personal context etc</span>
+        <section class="device-strip-container">
+            <div class="device-section-title">
+                <h2>Connect your data</h2>
+                <p class="subtitle">Wearables + file imports in seconds</p>
+            </div>
+            <div class="device-strip">
+                <!-- Desktop Layout -->
+                <div class="device-strip-desktop desktop-only">
+                    <div class="device-logo-row">
+                        <a href="#" class="device-strip-item device-logo" aria-label="Apple Health logo">
+                            <img src="static/apple_health_icon.png" alt="Apple Health logo">
+                        </a>
+                        <a href="#" class="device-strip-item device-logo" aria-label="Oura logo">
+                            <img src="static/oura_icon.png" alt="Oura logo">
+                        </a>
+                        <a href="#" class="device-strip-item device-logo" aria-label="Whoop logo">
+                            <img src="static/whoop_icon.png" alt="Whoop logo">
+                        </a>
+                        <a href="#" class="device-strip-item device-logo" aria-label="Garmin logo">
+                            <img src="static/garmin_icon.png" alt="Garmin logo">
+                        </a>
+                        <a href="#" class="device-strip-item device-logo" aria-label="Google Fit logo">
+                            <img src="static/googlefit_icon.png" alt="Google Fit logo">
+                        </a>
                     </div>
-                    <div class="data-point-item">
-                        <img src="static/notes_icon.svg" alt="Food logs icon">
-                        <span>Food logs</span>
+                    <div class="device-separator-row">
+                        <span class="device-strip-item device-separator">+</span>
                     </div>
-                    <div class="data-point-item">
-                        <img src="static/pdf_icon_new.png" alt="Lab tests icon">
-                        <img src="static/csv_icon_new.png" alt="Lab tests icon">
-                        <span>Lab tests</span>
+                    <div class="device-use-data-row">
+                        <a href="#" class="device-feature-item" aria-label="Lab tests data">
+                            <img src="static/lab_tests_icon.png" alt="Lab tests icon">
+                            Lab tests
+                        </a>
+                        <a href="#" class="device-feature-item" aria-label="Workouts log data">
+                            <img src="static/notes_icon.svg" alt="Notes icon">
+                            Workouts log
+                        </a>
+                        <a href="#" class="device-feature-item" aria-label="Diet logs data">
+                            <img src="static/notes_icon.svg" alt="Notes icon">
+                            Diet logs
+                        </a>
+                        <a href="#" class="device-feature-item" aria-label="Supplement logs data">
+                            <img src="static/notes_icon.svg" alt="Notes icon">
+                            Supplement logs
+                        </a>
+                        <a href="#" class="device-feature-item" aria-label="Other context data">
+                            <img src="static/notes_icon.svg" alt="Notes icon">
+                            Custom data
+                        </a>
+                        <a href="#" class="device-feature-item" aria-label="Journals data">
+                            <img src="static/notes_icon.svg" alt="Notes icon">
+                            Journals
+                        </a>
                     </div>
-                    <div class="data-point-item">
-                        <img src="static/notes_icon.svg" alt="Supplement logs icon">
-                        <span>Supplements logs</span>
+                    <div class="device-separator-row">
+                        <span class="device-strip-item device-separator">+</span>
                     </div>
-                    <div class="data-point-item">
-                        <img src="static/apple_health_icon.png" alt="Apple Health icon">
-                        <span>Apple health data</span>
+                    <div class="device-pill-row">
+                        <a href="#" class="device-strip-item device-pill" aria-label="Import CSV data">
+                            <img src="static/csv_icon_new.png" alt="CSV icon" class="pill-icon">
+                            CSV
+                        </a>
+                        <a href="#" class="device-strip-item device-pill" aria-label="Import PDF data">
+                            <img src="static/pdf_icon_new.png" alt="PDF icon" class="pill-icon">
+                            PDF
+                        </a>
+                        <a href="#" class="device-strip-item device-pill" aria-label="Import TXT data">
+                            <img src="static/notes_icon.svg" alt="TXT icon" class="pill-icon">
+                            TXT
+                        </a>
                     </div>
-                    <div class="data-point-item">
-                        <img src="static/notes_icon.svg" alt="Workouts logs icon">
-                        <span>Workouts logs</span>
+                </div>
+
+                <!-- Mobile Layout -->
+                <div class="device-strip-mobile mobile-only">
+                    <a href="#" class="device-strip-item device-logo" aria-label="Apple Health logo">
+                        <img src="static/apple_health_icon.png" alt="Apple Health logo">
+                    </a>
+                    <a href="#" class="device-strip-item device-logo" aria-label="Oura logo">
+                        <img src="static/oura_icon.png" alt="Oura logo">
+                    </a>
+                    <a href="#" class="device-strip-item device-logo" aria-label="Whoop logo">
+                        <img src="static/whoop_icon.png" alt="Whoop logo">
+                    </a>
+                    <a href="#" class="device-strip-item device-logo" aria-label="Garmin logo">
+                        <img src="static/garmin_icon.png" alt="Garmin logo">
+                    </a>
+                    <a href="#" class="device-strip-item device-logo" aria-label="Google Fit logo">
+                        <img src="static/googlefit_icon.png" alt="Google Fit logo">
+                    </a>
+                    <span class="device-strip-item device-separator mobile-plus" aria-hidden="true">+</span>
+                    <div class="device-use-data-mobile">
+                        <a href="#" class="device-feature-item" aria-label="Workouts log data">
+                            <img src="static/notes_icon.svg" alt="Notes icon">
+                            Workouts log
+                        </a>
+                        <a href="#" class="device-feature-item" aria-label="Diet logs data">
+                            <img src="static/notes_icon.svg" alt="Notes icon">
+                            Diet logs
+                        </a>
+                        <a href="#" class="device-feature-item" aria-label="Supplement logs data">
+                            <img src="static/notes_icon.svg" alt="Notes icon">
+                            Supplement logs
+                        </a>
+                        <a href="#" class="device-feature-item" aria-label="Other context data">
+                            <img src="static/notes_icon.svg" alt="Notes icon">
+                            Other context
+                        </a>
+                        <a href="#" class="device-feature-item" aria-label="Journals data">
+                            <img src="static/notes_icon.svg" alt="Notes icon">
+                            Journals
+                        </a>
+                        <a href="#" class="device-feature-item" aria-label="Lab tests data">
+                            <img src="static/lab_tests_icon.png" alt="Lab tests icon">
+                            Lab tests
+                        </a>
                     </div>
-                    <div class="data-point-item">
-                        <img src="static/notes_icon.svg" alt="Workout logs icon">
-                        <span>Other logs (journals, notes)</span>
+                    <span class="device-strip-item device-separator mobile-plus" aria-hidden="true">+</span>
+                    <div class="device-pills-mobile">
+                        <a href="#" class="device-strip-item device-pill" aria-label="Import CSV data">
+                            <img src="static/csv_icon_new.png" alt="CSV icon" class="pill-icon">
+                            CSV
+                        </a>
+                        <a href="#" class="device-strip-item device-pill" aria-label="Import PDF data">
+                            <img src="static/pdf_icon_new.png" alt="PDF icon" class="pill-icon">
+                            PDF
+                        </a>
+                        <a href="#" class="device-strip-item device-pill" aria-label="Import TXT data">
+                            <img src="static/notes_icon.svg" alt="TXT icon" class="pill-icon">
+                            TXT
+                        </a>
                     </div>
                 </div>
             </div>
+            <p class="device-caption">
+                Wearables and apps shown are natively supported. CSV / PDF / TXT lets you import lab work, uplaod custom files, exports from other apps, and more.
+            </p>
         </section>
 
         <section class="features-section">
@@ -728,7 +1061,7 @@
                             <path xmlns="http://www.w3.org/2000/svg" d="M20.9241 5.61722C20.9727 5.73425 20.9996 5.8625 21 5.997Z" fill="#0D0D0D"></path>
                             <path xmlns="http://www.w3.org/2000/svg" d="M3.07588 17.6172C3.02699 17.7351 3 17.8644 3 18C3 18.2761 3.11193 18.5261 3.29289 18.7071L6.29289 21.7071C6.68342 22.0976 7.31658 22.0976 7.70711 21.7071C8.09763 21.3166 8.09763 20.6834 7.70711 20.2929L6.41421 19L16 19C18.7614 19 21 16.7614 21 14V12C21 11.4477 20.5523 11 20 11C19.4477 11 19 11.4477 19 12V14C19 15.6569 17.6569 17 16 17L6.41421 17L7.70711 15.7071C8.09763 15.3166 8.09763 14.6834 7.70711 14.2929C7.31658 13.9024 6.68342 13.9024 6.29289 14.2929L3.29316 17.2926" fill="#0D0D0D"></path>
                             <path xmlns="http://www.w3.org/2000/svg" d="M3.07588 17.6172C3.12432 17.5001 3.19595 17.3904 3.29078 17.295Z" fill="#0D0D0D"></path>
-                            </svg>
+                        </svg>
                     </div>
                     <h3>Build lifestyle that works for your goals</h3>
                     <p>Data driven lifestyle changes with evidence-based recommendations and corrections.</p>
@@ -816,6 +1149,85 @@
             const x = e.pageX - slider.offsetLeft;
             const walk = (x - startX) * 2; //scroll-fast
             slider.scrollLeft = scrollLeft - walk;
+        });
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Function to handle scroll and highlight current section
+            const sections = document.querySelectorAll('section');
+            const navLinks = document.querySelectorAll('nav .header-link');
+
+            const highlightNavLink = () => {
+                let current = '';
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop - 100; // Adjusted for fixed header
+                    const sectionHeight = section.clientHeight;
+                    if (scrollY >= sectionTop && scrollY < sectionTop + sectionHeight) {
+                        current = section.getAttribute('id');
+                    }
+                });
+
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href').includes(current)) {
+                        link.classList.add('active');
+                    }
+                });
+            };
+
+            window.addEventListener('scroll', highlightNavLink);
+            highlightNavLink(); // Call on load to set initial active link
+
+            // Smooth scroll for navigation links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    document.querySelector(this.getAttribute('href')).scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                });
+            });
+
+            // Handle hero images dragging
+            const heroImages = document.querySelector('.hero-images');
+            if (heroImages) {
+                let isDown = false;
+                let startX;
+                let scrollLeft;
+
+                heroImages.addEventListener('mousedown', (e) => {
+                    isDown = true;
+                    heroImages.classList.add('active');
+                    startX = e.pageX - heroImages.offsetLeft;
+                    scrollLeft = heroImages.scrollLeft;
+                });
+
+                heroImages.addEventListener('mouseleave', () => {
+                    isDown = false;
+                    heroImages.classList.remove('active');
+                });
+
+                heroImages.addEventListener('mouseup', () => {
+                    isDown = false;
+                    heroImages.classList.remove('active');
+                });
+
+                heroImages.addEventListener('mousemove', (e) => {
+                    if (!isDown) return;
+                    e.preventDefault();
+                    const x = e.pageX - heroImages.offsetLeft;
+                    const walk = (x - startX) * 2; // Increased sensitivity
+                    heroImages.scrollLeft = scrollLeft - walk;
+                });
+            }
+
+            // Mini-device Strip Animation
+            const deviceStripContainer = document.querySelector('.device-strip-container');
+            if (deviceStripContainer) {
+                setTimeout(() => {
+                    deviceStripContainer.classList.add('animate-in');
+                }, 400); // 400ms delay for the animation
+            }
         });
     </script>
 </body>
