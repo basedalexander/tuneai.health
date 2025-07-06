@@ -283,11 +283,12 @@
             width: auto;
             filter: grayscale(100%) !important; /* Monochrome - reinforced */
             opacity: 0.7; /* Subtle */
-            transition: opacity 0.2s ease;
+            transition: opacity 0.2s ease, filter 0.2s ease; /* Add filter to transition */
         }
 
         .device-logo img:hover {
             opacity: 1; /* Restore opacity on hover */
+            filter: grayscale(0%) !important; /* Restore natural color on hover */
         }
 
         .device-separator {
@@ -319,6 +320,12 @@
             filter: grayscale(100%) !important; /* Ensure monochrome */
             opacity: 0.7; /* Subtle */
             margin-bottom: 5px; /* Add margin to separate icon from text */
+            transition: opacity 0.2s ease, filter 0.2s ease; /* Add filter to transition */
+        }
+
+        .device-pill:hover .pill-icon {
+            opacity: 1; /* Restore opacity on hover */
+            filter: grayscale(0%) !important; /* Restore natural color on hover */
         }
 
         .device-pill:hover {
@@ -358,11 +365,17 @@
             margin-bottom: 10px; /* Space between icon and text */
             filter: grayscale(100%) !important; /* Ensure monochrome */
             opacity: 0.7; /* Subtle, consistent with logos */
+            transition: opacity 0.2s ease, filter 0.2s ease; /* Add filter to transition */
         }
 
         .device-feature-item:hover {
             transform: translateY(-2px); /* Consistent hover with pills */
             box-shadow: 0 5px 15px rgba(0,0,0,0.12); /* Slightly enhanced shadow on hover */
+        }
+
+        .device-feature-item:hover img {
+            opacity: 1; /* Restore opacity on hover */
+            filter: grayscale(0%) !important; /* Restore natural color on hover */
         }
 
         /* New container for data use items on desktop */
