@@ -146,7 +146,10 @@
             justify-content: center;
             border: 1px solid var(--primary-blue);
             cursor: default;
-            margin-bottom: 40px; /* Increased space below the button */
+            margin-bottom: 40px;
+            max-width: 300px; /* User specified max-width */
+            margin-left: auto; /* Center horizontally */
+            margin-right: auto; /* Center horizontally */
         }
 
         .app-store-button:hover {
@@ -638,7 +641,8 @@
                     <h1>TuneAI</h1>
                 </div>
                 <h2 class="hero_subtitle">Smarter decisions from your biology</h2>
-                <p>ChatGPT for health done right</p>
+                <p>A private, on-device health companion that turns all your data into daily guidance you can trust
+                </p>
                 <span class="app-store-button">
                     Coming to App Store <img src="static/app_store_badge.svg" alt="Download on the App Store" class="app-store-badge-icon">
                 </span>
