@@ -1213,11 +1213,8 @@
         }
 
         .demo-video {
-            position: absolute;
-            top: 50%; /* Center vertically */
-            left: 50%; /* Center horizontally */
-            transform: translate(-50%, -50%); /* Adjust for video's own size */
-            width: 100%; /* Percentage width of the container */
+            /* Removed position, top, left, transform as video is no longer absolutely positioned */
+            width: 80%; /* Percentage width of the container */
             height: auto; /* Maintain aspect ratio */
             border-radius: 40px; /* Adjusted border-radius for better fit */
             object-fit: cover;
@@ -1240,7 +1237,7 @@
             }
 
             .demo-video {
-                width: 85%; /* Desktop adjustment */
+                width: 70%; /* Desktop adjustment */
                 height: auto;
                 border-radius: 40px; /* Desktop adjustment */
             }
@@ -1281,7 +1278,7 @@
             }
 
             .demo-video {
-                width: 80%; /* Tablet adjustment */
+                width: 65%; /* Tablet adjustment */
                 height: auto;
                 border-radius: 35px; /* Tablet adjustment */
             }
@@ -1329,7 +1326,7 @@
             }
 
             .demo-video {
-                width: 78%; /* Mobile adjustment */
+                width: 60%; /* Mobile adjustment */
                 height: auto;
                 border-radius: 30px; /* Mobile adjustment */
             }
@@ -1420,19 +1417,34 @@
             justify-content: center;
             align-items: center;
             margin-top: 0; /* No top margin on desktop */
-            position: relative; /* Ensure proper positioning for absolutely positioned children */
+            /* Removed position: relative; as it's no longer needed for absolute positioning of children */
         }
 
-        .iphone-frame-container {
-            width: 320px; /* Increased width for desktop */
-            height: 640px; /* Increased height for desktop */
-        }
+        /* Removed .iphone-frame-container styles as it's no longer used */
 
         .demo-video {
-            width: 90%; /* Adjust width to touch sides of inner frame */
-            height: auto;
-            transform: translate(-50%, -49.5%); /* Shift slightly lower */
-            border-radius: 45px; /* Desktop adjustment */
+            width: 100%; /* Ensure video takes full width of its new container */
+            height: auto; /* Maintain aspect ratio */
+            /* Removed position, top, left, transform as video is no longer absolutely positioned */
+            border-radius: 40px; /* Maintain desktop border-radius */
+            object-fit: contain; /* Ensure video is fully visible */
+            display: block; /* Ensure it behaves as a block element */
+        }
+
+        @media (min-width: 1024px) {
+            .demo-video {
+                width: 90%; /* Desktop adjustment */
+                height: auto;
+                border-radius: 45px; /* Desktop adjustment */
+            }
+        }
+
+        @media (max-width: 767px) {
+            .demo-video {
+                width: 100%; /* Mobile adjustment */
+                height: auto;
+                border-radius: 30px; /* Mobile adjustment */
+            }
         }
 
         @media (min-width: 1024px) {
@@ -1634,19 +1646,34 @@
             justify-content: center;
             align-items: center;
             margin-top: 0; /* No top margin on desktop */
-            position: relative; /* Ensure proper positioning for absolutely positioned children */
+            /* Removed position: relative; as it's no longer needed for absolute positioning of children */
         }
 
-        .iphone-frame-container {
-            width: 320px; /* Increased width for desktop */
-            height: 640px; /* Increased height for desktop */
-        }
+        /* Removed .iphone-frame-container styles as it's no longer used */
 
         .demo-video {
-            width: 90%; /* Adjust width to touch sides of inner frame */
-            height: auto;
-            transform: translate(-50%, -49.5%); /* Shift slightly lower */
-            border-radius: 45px; /* Desktop adjustment */
+            width: 100%; /* Ensure video takes full width of its new container */
+            height: auto; /* Maintain aspect ratio */
+            /* Removed position, top, left, transform as video is no longer absolutely positioned */
+            border-radius: 40px; /* Maintain desktop border-radius */
+            object-fit: contain; /* Ensure video is fully visible */
+            display: block; /* Ensure it behaves as a block element */
+        }
+
+        @media (min-width: 1024px) {
+            .demo-video {
+                width: 90%; /* Desktop adjustment */
+                height: auto;
+                border-radius: 45px; /* Desktop adjustment */
+            }
+        }
+
+        @media (max-width: 767px) {
+            .demo-video {
+                width: 100%; /* Mobile adjustment */
+                height: auto;
+                border-radius: 30px; /* Mobile adjustment */
+            }
         }
 
         @media (min-width: 1024px) {
@@ -1887,13 +1914,10 @@
                     </div>
                 </div>
                 <div class="zero-friction-logging-demo">
-                    <div class="iphone-frame-container">
-                        <img src="static/iphone frame.png" alt="iPhone 16 Pro Frame" class="iphone-frame-img">
-                        <video autoplay muted loop playsinline class="demo-video">
-                            <source src="static/logging.mp4" type="video/mp4">
-                            Your browser does not support the video tag.
-                        </video>
-                    </div>
+                    <video autoplay muted loop playsinline class="demo-video">
+                        <source src="static/logging-new.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
                 </div>
             </section>
         </section>
