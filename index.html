@@ -1079,8 +1079,9 @@
 
         .insights-container {
             display: flex;
+            flex-direction: column; /* Stack items vertically */
             justify-content: center;
-            align-items: flex-start; /* Align items to the top */
+            align-items: center; /* Center items horizontally */
             gap: 40px;
             max-width: 1200px;
             margin: 0 auto;
@@ -1088,10 +1089,26 @@
 
         .insights-grid {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Responsive grid columns */
             gap: 30px;
-            flex: 2; /* Takes more space than the image */
+            width: 100%; /* Ensure it takes full width within the container */
+            max-width: 900px; /* Limit max-width for the grid itself */
             text-align: left;
+        }
+
+        /* Adjustments for smaller screens */
+        @media (max-width: 768px) {
+            .insights-grid {
+                grid-template-columns: 1fr; /* Stack cards on mobile */
+                max-width: 400px; /* Limit width for stacked cards */
+            }
+        }
+
+        @media (min-width: 769px) and (max-width: 1023px) {
+            .insights-grid {
+                grid-template-columns: repeat(2, 1fr); /* Two columns on tablet */
+                max-width: 700px;
+            }
         }
 
         .insights-card {
@@ -1398,6 +1415,25 @@
             border-radius: 45px; /* Desktop adjustment */
         }
 
+        @media (min-width: 1024px) {
+            .insights-container {
+                flex-direction: row; /* Arrange items horizontally */
+                align-items: center; /* Vertically center items */
+                justify-content: space-between; /* Space out grid and image */
+            }
+
+            .insights-grid {
+                flex: 1; /* Allow grid to take available space */
+                max-width: none; /* Remove max-width constraint */
+            }
+
+            .iphone-frame-container {
+                flex: 0 0 auto; /* Prevent image from growing/shrinking */
+                order: 1; /* Place iPhone frame on the right */
+            }
+        }
+
+        /* Tablet Layout (768–1023 px) */
     </style>
 </head>
 <!-- Google tag (gtag.js) -->
