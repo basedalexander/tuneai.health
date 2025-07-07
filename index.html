@@ -1154,85 +1154,250 @@
         }
 
         .iphone-frame-container {
-            flex: 1; /* Takes less space than the grid */
+            position: relative;
+            width: 300px; /* Approximate width, adjust based on actual frame image */
+            height: 600px; /* Approximate height, adjust based on actual frame image */
+            max-width: 100%;
+            max-height: 80vh; /* Limit height to viewport height for larger screens */
             display: flex;
             justify-content: center;
             align-items: center;
+            overflow: hidden; /* Ensure video content is clipped within the frame */
         }
 
-        .iphone-frame {
-            width: 300px; /* Example width */
-            height: 600px; /* Example height */
-            border: 12px solid #000;
-            border-radius: 40px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-            overflow: hidden;
-            position: relative;
-            /* background-color: #000; */ /* For notch area */
-        }
-
-        .iphone-frame video {
+        .iphone-frame-img {
             width: 100%;
             height: 100%;
+            object-fit: contain; /* Ensure the image scales correctly within the container */
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 10;
+        }
+
+        .demo-video {
+            position: absolute;
+            top: 50%; /* Center vertically */
+            left: 50%; /* Center horizontally */
+            transform: translate(-50%, -50%); /* Adjust for video's own size */
+            width: 100%; /* Percentage width of the container */
+            height: auto; /* Maintain aspect ratio */
+            border-radius: 40px; /* Adjusted border-radius for better fit */
             object-fit: cover;
-            border-radius: 28px; /* Inner radius for video */
+            z-index: 5;
         }
 
-        @media (max-width: 1024px) {
-            .insights-container {
-                flex-direction: column;
-                align-items: center;
+        /* Desktop Layout (≥1024 px) */
+        @media (min-width: 1024px) {
+            .zero-friction-section-wrapper {
+                padding: 96px 0; /* Desktop spacing */
+            }
+            .zero-friction-logging-section {
+                display: grid;
+                grid-template-columns: 1fr 1fr; /* Two-column grid */
+                gap: 64px; /* Spacing between columns */
+                align-items: center; /* Vertically centre copy block to demo */
+                padding: 0 40px; /* More horizontal padding for desktop */
+                max-width: 1200px; /* Set a max-width for the section */
+                margin: 0 auto; /* Center the section */
             }
 
-            .insights-grid {
-                grid-template-columns: 1fr; /* Stack cards on tablet/mobile */
-                width: 100%;
-                max-width: 500px; /* Limit width of stacked cards */
-            }
-
-            .iphone-frame-container {
-                margin-top: 40px; /* Space between cards and video on mobile */
+            .demo-video {
+                width: 85%; /* Desktop adjustment */
+                height: auto;
+                border-radius: 40px; /* Desktop adjustment */
             }
         }
 
-        @media (max-width: 640px) {
-            .insights-section {
-                padding: 60px 20px;
+        /* Tablet Layout (768–1023 px) */
+        @media (min-width: 768px) and (max-width: 1023px) {
+            .zero-friction-logging-section {
+                padding: 72px 30px; /* Tablet spacing */
+                flex-direction: column; /* Stack vertically */
+                text-align: center; /* Center-align everything */
             }
 
-            .insights-section h2 {
-                font-size: 30px;
-                margin-bottom: 30px;
+            .zero-friction-logging-content {
+                max-width: 600px; /* Adjust max-width for tablet */
+                text-align: center; /* Center-align text */
             }
 
-            .insights-grid {
-                gap: 20px;
+            .zero-friction-logging-content h2 {
+                font-size: 40px;
             }
 
-            .insights-card {
-                padding: 25px;
-            }
-
-            .insight-icon {
-                width: 40px;
-                height: 40px;
-            }
-
-            .insights-card h3 {
+            .lead-sentence {
                 font-size: 18px;
             }
 
-            .insights-card p {
-                font-size: 15px;
+            .badge-strip {
+                justify-content: center; /* Center badges on tablet */
             }
 
-            .iphone-frame {
-                width: 250px;
-                height: 500px;
-                border-width: 10px;
-                border-radius: 30px;
+            .zero-friction-logging-demo {
+                margin-top: 32px; /* 32 px gap between blocks */
+            }
+
+            .iphone-frame-container {
+                width: 250px; /* Smaller width for tablet */
+                height: 500px; /* Smaller height for tablet */
+            }
+
+            .demo-video {
+                width: 80%; /* Tablet adjustment */
+                height: auto;
+                border-radius: 35px; /* Tablet adjustment */
             }
         }
+
+        /* Mobile Layout (<768 px) */
+        @media (max-width: 767px) {
+            .zero-friction-logging-section {
+                padding: 56px 20px; /* Mobile spacing */
+                flex-direction: column; /* Stack vertically */
+                text-align: center; /* Center-align everything */
+            }
+
+            .zero-friction-logging-content {
+                text-align: center; /* Center-align text */
+                max-width: 100%;
+            }
+
+            .zero-friction-logging-content h2 {
+                font-size: 28px; /* Mobile H2 */
+                line-height: 36px;
+            }
+
+            .lead-sentence {
+                font-size: 16px; /* Mobile body */
+                line-height: 24px;
+            }
+
+            .badge-strip {
+                justify-content: center; /* Center badges on mobile */
+            }
+
+            .badge {
+                font-size: 14px; /* Mobile badges */
+            }
+
+            .zero-friction-logging-demo {
+                order: -1; /* Demo first, copy second */
+                margin-bottom: 32px; /* Gap between demo and copy */
+            }
+
+            .iphone-frame-container {
+                width: 200px; /* Even smaller width for mobile */
+                height: 400px; /* Even smaller height for mobile */
+            }
+
+            .demo-video {
+                width: 78%; /* Mobile adjustment */
+                height: auto;
+                border-radius: 30px; /* Mobile adjustment */
+            }
+        }
+
+        .zero-friction-section-wrapper {
+            background-color: #fff;
+            padding: 96px 0; /* Vertical spacing only, full width white background */
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 200ms ease-out, transform 200ms ease-out;
+            border-bottom: 1px solid var(--border-color); /* Add a border to separate from the next section */
+        }
+
+        .zero-friction-section-wrapper.fade-in {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .zero-friction-logging-section {
+            background-color: #fff;
+            padding: 0 20px; /* Remove vertical padding, keep horizontal for content inside max-width */
+            text-align: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            /* Removed opacity, transform, transition from here as they are moved to wrapper */
+        }
+
+        .zero-friction-logging-content {
+            max-width: 460px; /* Max-width for copy on desktop */
+            margin: 0 auto;
+            text-align: left; /* Align text to left on desktop */
+        }
+
+        .zero-friction-logging-content h2 {
+            font-size: 48px; /* Bold headline, adjust as needed from design system */
+            font-weight: 700;
+            margin-bottom: 16px; /* Spacing below H2 */
+            color: var(--dark-text);
+            line-height: 1.1; /* Tighter line height */
+        }
+
+        .lead-sentence {
+            font-size: 20px; /* One-sentence explainer */
+            color: var(--medium-text);
+            margin-bottom: 32px; /* Spacing below lead sentence */
+            line-height: 1.5; /* Good readability */
+        }
+
+        .badge-strip {
+            display: flex;
+            justify-content: flex-start; /* Align badges to the left on desktop */
+            gap: 8px; /* Compact spacing between badges */
+            margin-bottom: 24px; /* Spacing below badge strip */
+            flex-wrap: wrap; /* Allow badges to wrap on smaller screens */
+        }
+
+        .badge {
+            background-color: transparent;
+            border: 1px solid #E5E5EA; /* Neutral border */
+            padding: 8px 16px; /* Compact padding */
+            border-radius: 16px; /* Simple rounded pills */
+            font-weight: 500;
+            font-size: 14px; /* Badge font size */
+            color: var(--dark-text); /* Ensure contrast */
+        }
+
+        .micro-cta {
+            background-color: transparent; /* No background for micro-CTA */
+            color: var(--primary-blue); /* Blue text */
+            padding: 0;
+            border-radius: 0;
+            font-size: 16px; /* Micro-CTA font size */
+            font-weight: 600;
+            text-decoration: none;
+            transition: color 0.2s ease;
+            display: inline-flex; /* To align with text baseline */
+            align-items: center;
+        }
+
+        .micro-cta:hover {
+            color: #0056b3; /* Darker blue on hover */
+            text-decoration: underline;
+        }
+
+        .zero-friction-logging-demo {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 0; /* No top margin on desktop */
+            position: relative; /* Ensure proper positioning for absolutely positioned children */
+        }
+
+        .iphone-frame-container {
+            width: 320px; /* Increased width for desktop */
+            height: 640px; /* Increased height for desktop */
+        }
+
+        .demo-video {
+            width: 90%; /* Adjust width to touch sides of inner frame */
+            height: auto;
+            transform: translate(-50%, -49.5%); /* Shift slightly lower */
+            border-radius: 45px; /* Desktop adjustment */
+        }
+
     </style>
 </head>
 <!-- Google tag (gtag.js) -->
@@ -1440,6 +1605,30 @@
             </p>
         </section>
 
+        <section class="zero-friction-section-wrapper">
+            <section class="zero-friction-logging-section">
+                <div class="zero-friction-logging-content">
+                    <h2>Snap. Speak. Tap. Done.</h2>
+                    <p class="lead-sentence">See photo-to-meal below. Voice and presets log workouts and supplements just as fast.</p>
+                    <div class="badge-strip">
+                        <span class="badge">Food</span>
+                        <span class="badge">Workouts</span>
+                        <span class="badge">Supplements</span>
+                    </div>
+                    <a href="#waitlist-block" class="micro-cta" aria-label="Join the TuneAI wait-list">See it in action &gt;</a>
+                </div>
+                <div class="zero-friction-logging-demo">
+                    <div class="iphone-frame-container">
+                        <img src="static/iphone frame.png" alt="iPhone 16 Pro Frame" class="iphone-frame-img">
+                        <video autoplay muted loop playsinline class="demo-video">
+                            <source src="static/logging.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                    </div>
+                </div>
+            </section>
+        </section>
+
         <section class="insights-section">
             <h2>Personalised insights</h2>
             <div class="insights-container">
@@ -1589,7 +1778,7 @@
             </div>
         </section>
 
-        <section class="cta-section">
+        <section class="cta-section" id="waitlist-block">
             <h2>Join waitlist & get early access</h2>
             <p>Be among the first to experience the product. Sign up for our waitlist and get a chance to participate in private testing, your feedback means a lot!</p>
             <div class="cta-buttons-container">
@@ -1762,6 +1951,41 @@
                     });
                 });
             }
+
+            // Intersection Observer for fade-in animation
+            const zeroFrictionSection = document.querySelector('.zero-friction-logging-section');
+            if (zeroFrictionSection) {
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting && entry.intersectionRatio >= 0.12) {
+                            zeroFrictionSection.classList.add('fade-in');
+                        } else {
+                            zeroFrictionSection.classList.remove('fade-in'); // Optional: remove class when not in view
+                        }
+                    });
+                }, {
+                    threshold: 0.12 // Trigger when 12% of the element is visible
+                });
+                observer.observe(zeroFrictionSection);
+            }
+
+            // Video play/pause on viewport entry/exit
+            const demoVideo = document.querySelector('.zero-friction-logging-demo video');
+            if (demoVideo) {
+                const videoObserver = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            demoVideo.play();
+                        } else {
+                            demoVideo.pause();
+                        }
+                    });
+                }, {
+                    threshold: 0.5 // Adjust as needed for when the video should play/pause
+                });
+                videoObserver.observe(demoVideo);
+            }
+
         });
     </script>
     <script>
@@ -1787,6 +2011,44 @@
             insightsCards.forEach(card => {
                 observer.observe(card);
             });
+        });
+    </script>
+    <script>
+        // Intersection Observer for fade-in animation
+        document.addEventListener('DOMContentLoaded', function() {
+            const zeroFrictionSectionWrapper = document.querySelector('.zero-friction-section-wrapper');
+            if (zeroFrictionSectionWrapper) {
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting && entry.intersectionRatio >= 0.12) {
+                            zeroFrictionSectionWrapper.classList.add('fade-in');
+                        } else {
+                            zeroFrictionSectionWrapper.classList.remove('fade-in'); // Optional: remove class when not in view
+                        }
+                    });
+                }, {
+                    threshold: 0.12 // Trigger when 12% of the element is visible
+                });
+                observer.observe(zeroFrictionSectionWrapper);
+            }
+
+            // Video play/pause on viewport entry/exit
+            const demoVideo = document.querySelector('.zero-friction-logging-demo video');
+            if (demoVideo) {
+                const videoObserver = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            demoVideo.play();
+                        } else {
+                            demoVideo.pause();
+                        }
+                    });
+                }, {
+                    threshold: 0.5 // Adjust as needed for when the video should play/pause
+                });
+                videoObserver.observe(demoVideo);
+            }
+
         });
     </script>
 </body>
