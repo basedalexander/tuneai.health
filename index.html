@@ -926,7 +926,7 @@
                 justify-content: center;
             }
 
-            features-container {
+            .features-container {
                 display: flex; /* Change to flexbox for better centering on small screens */
                 flex-wrap: wrap;
                 justify-content: center; /* Center the flex items */
@@ -1026,6 +1026,19 @@
             }
             .video-section h2 {
                 font-size: 28px;
+            }
+
+            .features-container {
+                grid-template-columns: 1fr; /* Stack items on mobile */
+                padding: 20px 15px 80px 15px; /* Adjust horizontal padding for mobile */
+                gap: 20px; /* Adjust gap for mobile */
+                max-width: 100%; /* Ensure it uses full available width */
+            }
+
+            .feature-item {
+                width: 100%; /* Make items take full width */
+                max-width: 400px; /* Limit max-width to ensure they don't get too big */
+                margin: 0 auto 20px auto; /* Center items and add bottom margin */
             }
         }
 
@@ -1441,6 +1454,220 @@
         }
 
         /* Tablet Layout (768–1023 px) */
+        @media (min-width: 768px) and (max-width: 1023px) {
+            .zero-friction-logging-section {
+                padding: 72px 30px; /* Tablet spacing */
+                flex-direction: column; /* Stack vertically */
+                text-align: center; /* Center-align everything */
+            }
+
+            .zero-friction-logging-content {
+                max-width: 600px; /* Adjust max-width for tablet */
+                text-align: center; /* Center-align text */
+            }
+
+            .zero-friction-logging-content h2 {
+                font-size: 40px;
+            }
+
+            .lead-sentence {
+                font-size: 18px;
+            }
+
+            .badge-strip {
+                justify-content: center; /* Center badges on tablet */
+            }
+
+            .zero-friction-logging-demo {
+                margin-top: 32px; /* 32 px gap between blocks */
+            }
+
+            .iphone-frame-container {
+                width: 250px; /* Smaller width for tablet */
+                height: 500px; /* Smaller height for tablet */
+            }
+
+            .demo-video {
+                width: 80%; /* Tablet adjustment */
+                height: auto;
+                border-radius: 35px; /* Tablet adjustment */
+            }
+        }
+
+        /* Mobile Layout (<768 px) */
+        @media (max-width: 767px) {
+            .zero-friction-logging-section {
+                padding: 56px 20px; /* Mobile spacing */
+                flex-direction: column; /* Stack vertically */
+                text-align: center; /* Center-align everything */
+            }
+
+            .zero-friction-logging-content {
+                text-align: center; /* Center-align text */
+                max-width: 100%;
+            }
+
+            .zero-friction-logging-content h2 {
+                font-size: 28px; /* Mobile H2 */
+                line-height: 36px;
+            }
+
+            .lead-sentence {
+                font-size: 16px; /* Mobile body */
+                line-height: 24px;
+            }
+
+            .badge-strip {
+                justify-content: center; /* Center badges on mobile */
+            }
+
+            .badge {
+                font-size: 14px; /* Mobile badges */
+            }
+
+            .zero-friction-logging-demo {
+                order: -1; /* Demo first, copy second */
+                margin-bottom: 32px; /* Gap between demo and copy */
+            }
+
+            .iphone-frame-container {
+                width: 200px; /* Even smaller width for mobile */
+                height: 400px; /* Even smaller height for mobile */
+            }
+
+            .demo-video {
+                width: 78%; /* Mobile adjustment */
+                height: auto;
+                border-radius: 30px; /* Mobile adjustment */
+            }
+
+            .features-container {
+                grid-template-columns: 1fr; /* Stack items on mobile */
+                padding: 0 20px; /* Add horizontal padding to prevent overlapping */
+                gap: 20px; /* Adjust gap for mobile */
+                max-width: 100%; /* Ensure it uses full available width */
+            }
+        }
+
+        .zero-friction-section-wrapper {
+            background-color: #fff;
+            padding: 96px 0; /* Vertical spacing only, full width white background */
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 200ms ease-out, transform 200ms ease-out;
+            border-bottom: 1px solid var(--border-color); /* Add a border to separate from the next section */
+        }
+
+        .zero-friction-section-wrapper.fade-in {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .zero-friction-logging-section {
+            background-color: #fff;
+            padding: 0 20px; /* Remove vertical padding, keep horizontal for content inside max-width */
+            text-align: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            /* Removed opacity, transform, transition from here as they are moved to wrapper */
+        }
+
+        .zero-friction-logging-content {
+            max-width: 460px; /* Max-width for copy on desktop */
+            margin: 0 auto;
+            text-align: left; /* Align text to left on desktop */
+        }
+
+        .zero-friction-logging-content h2 {
+            font-size: 48px; /* Bold headline, adjust as needed from design system */
+            font-weight: 700;
+            margin-bottom: 16px; /* Spacing below H2 */
+            color: var(--dark-text);
+            line-height: 1.1; /* Tighter line height */
+        }
+
+        .lead-sentence {
+            font-size: 20px; /* One-sentence explainer */
+            color: var(--medium-text);
+            margin-bottom: 32px; /* Spacing below lead sentence */
+            line-height: 1.5; /* Good readability */
+        }
+
+        .badge-strip {
+            display: flex;
+            justify-content: flex-start; /* Align badges to the left on desktop */
+            gap: 8px; /* Compact spacing between badges */
+            margin-bottom: 24px; /* Spacing below badge strip */
+            flex-wrap: wrap; /* Allow badges to wrap on smaller screens */
+        }
+
+        .badge {
+            background-color: transparent;
+            border: 1px solid #E5E5EA; /* Neutral border */
+            padding: 8px 16px; /* Compact padding */
+            border-radius: 16px; /* Simple rounded pills */
+            font-weight: 500;
+            font-size: 14px; /* Badge font size */
+            color: var(--dark-text); /* Ensure contrast */
+        }
+
+        .micro-cta {
+            background-color: transparent; /* No background for micro-CTA */
+            color: var(--primary-blue); /* Blue text */
+            padding: 0;
+            border-radius: 0;
+            font-size: 16px; /* Micro-CTA font size */
+            font-weight: 600;
+            text-decoration: none;
+            transition: color 0.2s ease;
+            display: inline-flex; /* To align with text baseline */
+            align-items: center;
+        }
+
+        .micro-cta:hover {
+            color: #0056b3; /* Darker blue on hover */
+            text-decoration: underline;
+        }
+
+        .zero-friction-logging-demo {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 0; /* No top margin on desktop */
+            position: relative; /* Ensure proper positioning for absolutely positioned children */
+        }
+
+        .iphone-frame-container {
+            width: 320px; /* Increased width for desktop */
+            height: 640px; /* Increased height for desktop */
+        }
+
+        .demo-video {
+            width: 90%; /* Adjust width to touch sides of inner frame */
+            height: auto;
+            transform: translate(-50%, -49.5%); /* Shift slightly lower */
+            border-radius: 45px; /* Desktop adjustment */
+        }
+
+        @media (min-width: 1024px) {
+            .insights-container {
+                flex-direction: row; /* Arrange items horizontally */
+                align-items: center; /* Vertically center items */
+                justify-content: space-between; /* Space out grid and image */
+            }
+
+            .insights-grid {
+                flex: 1; /* Allow grid to take available space */
+                max-width: none; /* Remove max-width constraint */
+            }
+
+            .iphone-frame-container {
+                flex: 0 0 auto; /* Prevent image from growing/shrinking */
+                order: 1; /* Place iPhone frame on the right */
+            }
+        }
+
+        /* Tablet Layout (768–1023 px) */
     </style>
 </head>
 <!-- Google tag (gtag.js) -->
@@ -1652,7 +1879,7 @@
             <section class="zero-friction-logging-section">
                 <div class="zero-friction-logging-content">
                     <h2>Snap. Speak. Tap. Done.</h2>
-                    <p class="lead-sentence">Log hard things with zero effort</p>
+                    <p class="lead-sentence">Log hard things with zero effort with camera or voice</p>
                     <div class="badge-strip">
                         <span class="badge">Food</span>
                         <span class="badge">Workouts</span>
