@@ -1320,15 +1320,23 @@
                 margin-bottom: 32px; /* Gap between demo and copy */
             }
 
-            .iphone-frame-container {
-                width: 200px; /* Even smaller width for mobile */
+            .insights-section .iphone-frame-container { /* Target only the insights section image */
+                width: 70%; /* Adjust as needed */
+                max-width: 300px; /* Adjust max-width to control overall size on mobile */
                 height: auto; /* Allow height to adjust based on content */
             }
 
-            .demo-video {
-                width: 60%; /* Mobile adjustment */
+            .iphone-frame-container .demo-video {
+                width: 100%; /* Mobile adjustment */
                 height: auto;
                 border-radius: 30px; /* Mobile adjustment */
+            }
+
+            .features-container {
+                grid-template-columns: 1fr; /* Stack items on mobile */
+                padding: 0 20px; /* Add horizontal padding to prevent overlapping */
+                gap: 20px; /* Adjust gap for mobile */
+                max-width: 100%; /* Ensure it uses full available width */
             }
         }
 
