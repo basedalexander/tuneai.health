@@ -40,6 +40,12 @@
             overflow-x: hidden; /* Prevent horizontal scrolling */
         }
 
+        /* This rule helps prevent horizontal scroll by ensuring elements don't exceed viewport width */
+        * {
+            box-sizing: border-box; /* Include padding and border in the element's total width and height */
+            max-width: 100%; /* Ensure no element ever exceeds the width of its parent */
+        }
+
         main { /* Added styles for the main content area */
             margin-top: 64px; /* Push main content down by header height */
             flex-grow: 1; /* Allow main to grow and push footer to bottom */
