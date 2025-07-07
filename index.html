@@ -1182,6 +1182,13 @@
             overflow: hidden; /* Ensure video content is clipped within the frame */
         }
 
+        .insights-section .iphone-frame-container img {
+            width: 100%;
+            height: auto; /* Maintain aspect ratio */
+            object-fit: contain; /* Ensure entire image is visible */
+            border-radius: 28px; /* Apply border-radius here */
+        }
+
         .iphone-frame-img {
             width: 100%;
             height: 100%;
@@ -1705,8 +1712,8 @@
                               <line x1="18" y1="4" x2="20" y2="8" />
                             </svg>
                         </div>
-                        <h3>Insights before issues</h3>
-                        <p>Weekly digests & gentle reminders keep you on track—no doom-scrolling spreadsheets required.</p>
+                        <h3>Spot bad trends and risks early</h3>
+                        <p>Weekly digests & gentle reminders keep you on track - no doom-scrolling spreadsheets required.</p>
                     </div>
                     <div class="insights-card">
                         <div class="insight-icon evidence-based">
@@ -1737,7 +1744,7 @@
                     </div>
                 </div>
                 <div class="iphone-frame-container">
-                        <img src="static/checkup.png" alt="TuneAI Insight Demo Placeholder" loading="lazy" style="width:100%; height:100%; object-fit:cover; border-radius: 28px;">
+                        <img src="static/checkup.png" alt="TuneAI Insight Demo Placeholder" loading="lazy">
                 </div>
             </div>
         </section>
