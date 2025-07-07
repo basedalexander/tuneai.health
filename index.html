@@ -1214,9 +1214,9 @@
 
         .demo-video {
             /* Removed position, top, left, transform as video is no longer absolutely positioned */
-            width: 80%; /* Percentage width of the container */
+            width: 20%; /* Percentage width of the container */
             height: auto; /* Maintain aspect ratio */
-            border-radius: 40px; /* Adjusted border-radius for better fit */
+            border-radius: 30px; /* Adjusted border-radius for better fit */
             object-fit: cover;
             z-index: 5;
         }
@@ -1237,9 +1237,9 @@
             }
 
             .demo-video {
-                width: 70%; /* Desktop adjustment */
+                width: 15%; /* Desktop adjustment */
                 height: auto;
-                border-radius: 40px; /* Desktop adjustment */
+                border-radius: 30px; /* Desktop adjustment */
             }
         }
 
@@ -1417,19 +1417,17 @@
             justify-content: center;
             align-items: center;
             margin-top: 0; /* No top margin on desktop */
-            /* Removed position: relative; as it's no longer needed for absolute positioning of children */
+            max-width: 300px; /* Set max-width to make the container smaller */
+            margin: 0 auto; /* Center the container */
+        }
+
+        .zero-friction-logging-demo video.demo-video {
+            width: 100%; /* Make video fill the container */
+            height: auto; /* Maintain aspect ratio */
+            border-radius: 30px; /* Apply border-radius here as well */
         }
 
         /* Removed .iphone-frame-container styles as it's no longer used */
-
-        .demo-video {
-            width: 100%; /* Ensure video takes full width of its new container */
-            height: auto; /* Maintain aspect ratio */
-            /* Removed position, top, left, transform as video is no longer absolutely positioned */
-            border-radius: 40px; /* Maintain desktop border-radius */
-            object-fit: contain; /* Ensure video is fully visible */
-            display: block; /* Ensure it behaves as a block element */
-        }
 
         @media (min-width: 1024px) {
             .demo-video {
@@ -1646,18 +1644,14 @@
             justify-content: center;
             align-items: center;
             margin-top: 0; /* No top margin on desktop */
-            /* Removed position: relative; as it's no longer needed for absolute positioning of children */
+            max-width: 300px; /* Set max-width to make the container smaller */
+            margin: 0 auto; /* Center the container */
         }
 
-        /* Removed .iphone-frame-container styles as it's no longer used */
-
-        .demo-video {
-            width: 100%; /* Ensure video takes full width of its new container */
+        .zero-friction-logging-demo video.demo-video {
+            width: 100%; /* Make video fill the container */
             height: auto; /* Maintain aspect ratio */
-            /* Removed position, top, left, transform as video is no longer absolutely positioned */
-            border-radius: 40px; /* Maintain desktop border-radius */
-            object-fit: contain; /* Ensure video is fully visible */
-            display: block; /* Ensure it behaves as a block element */
+            border-radius: 30px; /* Apply border-radius here as well */
         }
 
         @media (min-width: 1024px) {
