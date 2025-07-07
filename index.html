@@ -1609,13 +1609,12 @@
             <section class="zero-friction-logging-section">
                 <div class="zero-friction-logging-content">
                     <h2>Snap. Speak. Tap. Done.</h2>
-                    <p class="lead-sentence">See photo-to-meal below. Voice and presets log workouts and supplements just as fast.</p>
+                    <p class="lead-sentence">Log hard things with zero effort</p>
                     <div class="badge-strip">
                         <span class="badge">Food</span>
                         <span class="badge">Workouts</span>
                         <span class="badge">Supplements</span>
                     </div>
-                    <a href="#waitlist-block" class="micro-cta" aria-label="Join the TuneAI wait-list">See it in action &gt;</a>
                 </div>
                 <div class="zero-friction-logging-demo">
                     <div class="iphone-frame-container">
@@ -1976,6 +1975,7 @@
                     entries.forEach(entry => {
                         if (entry.isIntersecting) {
                             demoVideo.play();
+                            demoVideo.playbackRate = 2.0; // Play video 2x faster
                         } else {
                             demoVideo.pause();
                         }
@@ -2039,6 +2039,7 @@
                     entries.forEach(entry => {
                         if (entry.isIntersecting) {
                             demoVideo.play();
+                            demoVideo.playbackRate = 2.0; // Play video 2x faster
                         } else {
                             demoVideo.pause();
                         }
