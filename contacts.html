@@ -1278,6 +1278,102 @@
                 padding: 30px;
             }
         }
+
+        /* Business Card Styles */
+        .business-card-container {
+            width: 350px; /* Standard business card width */
+            height: 200px; /* Standard business card height */
+            perspective: 1000px; /* For 3D flip effect, apply here */
+            margin: 50px auto; /* Center the card */
+            cursor: pointer;
+            transform-style: preserve-3d; /* Ensure 3D context for nested elements */
+        }
+
+        .business-card {
+            width: 100%;
+            height: 100%;
+            position: relative; /* Ensure card faces are positioned relative to this parent */
+            transform-style: preserve-3d; /* Ensure 3D context for nested elements */
+            transition: transform 0.8s;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            border-radius: 20px; /* Increased border-radius for more rounded corners */
+            transform-origin: center center; /* Ensure rotation from the center */
+        }
+
+        .business-card.flipped {
+            transform: rotateY(180deg);
+        }
+
+        .card-face {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            padding: 20px;
+            box-sizing: border-box;
+            background-color: #fff;
+            color: var(--dark-text);
+        }
+
+        .card-front {
+            transform: rotateY(0deg); /* Explicitly define initial rotation */
+            backface-visibility: hidden; /* Hide front face when rotated away */
+            z-index: 2; /* Ensure front is on top initially */
+            border: 1px solid var(--border-color);
+            background: linear-gradient(135deg, #f0f8ff, #e6f7ff); /* Light gradient background */
+        }
+
+        .card-front img {
+            max-width: 120px; /* Size for the heart image */
+            height: auto;
+            margin-bottom: 15px;
+        }
+
+        .card-front p {
+            font-size: 1.2em;
+            font-weight: 600;
+            color: var(--primary-blue);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin: 0;
+        }
+
+        .card-back {
+            transform: rotateY(180deg); /* Start rotated for the back face */
+            backface-visibility: hidden; /* Hide back face when rotated away */
+            z-index: 1; /* Ensure back is behind initially */
+            border: 1px solid var(--border-color);
+            background-color: #f9f9f9; /* Changed back to original color */
+            text-align: center;
+            padding: 25px;
+            justify-content: flex-start;
+        }
+
+        .card-back h2 {
+            font-size: 1.8em;
+            color: var(--primary-blue);
+            margin-bottom: 15px;
+        }
+
+        .card-back p {
+            font-size: 1em;
+            margin-bottom: 10px;
+            color: var(--medium-text);
+        }
+
+        .card-back a {
+            color: var(--primary-blue);
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        .card-back a:hover {
+            color: #0056b3;
+            text-decoration: underline;
+        }
     </style>
 </head>
 <!-- Google tag (gtag.js) -->
@@ -1317,17 +1413,24 @@
     </div>
 
     <main>
-        <section class="contact-section">
-            <div class="contact-card">
-                <h1>Contact us</h1>
-                <p> <a href="mailto:helllo@tuneai.health">helllo@tuneai.health</a></p>
-                <p style="text-align: center; margin-top: 20px;">
-                    <a href="https://x.com/tuneaihealth" target="_blank" style="display: inline-block; text-decoration: none;">
-                        <img src="static/x-com.png" alt="X (formerly Twitter)" style="width: 48px; height: 48px;">
-                    </a>
-                </p>
+        <div class="business-card-container">
+            <div class="business-card" id="contactCard">
+                <div class="card-face card-front">
+                    <img src="static/heart.png" alt="TuneAI Heart Icon">
+                    
+                </div>
+                <div class="card-face card-back">
+                    
+                    <p><a href="mailto:helllo@tuneai.health">helllo@tuneai.health</a></p>
+                    <p style="margin-top: 20px;">
+                        <a href="https://x.com/tuneaihealth" target="_blank" style="display: inline-block; text-decoration: none;">
+                            <img src="static/x-com.png" alt="X (formerly Twitter)" style="width: 48px; height: 48px;">
+                        </a>
+                    </p>
+                    
+                </div>
             </div>
-        </section>
+        </div>
     </main>
 
     <footer>
@@ -1385,6 +1488,32 @@
                     });
                 });
             }
+        });
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const card = document.getElementById('contactCard');
+
+            // Automatic flip after 3 seconds
+            setTimeout(() => {
+                card.classList.add('flipped');
+            }, 1000); // Changed to 1 second
+
+            // Manual flip on click
+            card.addEventListener('click', (event) => {
+                // Only flip if the click target is not an anchor tag or its child (like the image in the X button)
+                if (!event.target.closest('a')) {
+                    card.classList.toggle('flipped');
+                }
+            });
+
+            // Prevent card flip when clicking on links inside the card
+            const cardLinks = card.querySelectorAll('a');
+            cardLinks.forEach(link => {
+                link.addEventListener('click', (event) => {
+                    event.stopPropagation(); // Stop the event from bubbling up to the card element
+                });
+            });
         });
     </script>
 </body>
