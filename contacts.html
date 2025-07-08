@@ -18,7 +18,7 @@
             --light-gray: #F5F5F7; /* Light background gray */
             --dark-text: #1D1D1F; /* Dark text for contrast */
             --medium-text: #6e6e73; /* Medium gray for secondary text */
-            --border-color: #D2D2D7;
+            --border-color: #EAEAEA; /* Slightly darker border color */
         }
 
         body {
@@ -1241,8 +1241,9 @@
         .contact-card {
             background-color: #ffffff;
             padding: 40px 60px;
-            border-radius: 18px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08), 0 15px 30px rgba(0, 0, 0, 0.05);
+            border-radius: 25px;
+            border: 0.5px solid var(--border-color);
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03), 0 1px 4px rgba(0, 0, 0, 0.015); /* Even more shallow box-shadow */
             text-align: center;
             max-width: 500px;
             margin: auto;
@@ -1292,12 +1293,13 @@
         .business-card {
             width: 100%;
             height: 100%;
-            position: relative; /* Ensure card faces are positioned relative to this parent */
-            transform-style: preserve-3d; /* Ensure 3D context for nested elements */
+            position: relative;
+            transform-style: preserve-3d;
             transition: transform 0.8s;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-            border-radius: 20px; /* Increased border-radius for more rounded corners */
-            transform-origin: center center; /* Ensure rotation from the center */
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03), 0 1px 4px rgba(0, 0, 0, 0.015); /* Even more shallow box-shadow */
+            border-radius: 25px;
+            transform-origin: center center;
+            border: 0.5px solid var(--border-color);
         }
 
         .business-card.flipped {
@@ -1316,18 +1318,20 @@
             box-sizing: border-box;
             background-color: #fff;
             color: var(--dark-text);
+            border-radius: 25px;
         }
 
         .card-front {
-            transform: rotateY(0deg); /* Explicitly define initial rotation */
-            backface-visibility: hidden; /* Hide front face when rotated away */
-            z-index: 2; /* Ensure front is on top initially */
-            border: 1px solid var(--border-color);
-            background: linear-gradient(135deg, #f0f8ff, #e6f7ff); /* Light gradient background */
+            transform: rotateY(0deg);
+            backface-visibility: hidden;
+            z-index: 2;
+            border: 0.5px solid var(--border-color);
+            background: linear-gradient(135deg, #f0f8ff, #e6f7ff);
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03), 0 1px 4px rgba(0, 0, 0, 0.015); /* Even more shallow box-shadow */
         }
 
         .card-front img {
-            max-width: 120px; /* Size for the heart image */
+            max-width: 120px;
             height: auto;
             margin-bottom: 15px;
         }
@@ -1342,14 +1346,15 @@
         }
 
         .card-back {
-            transform: rotateY(180deg); /* Start rotated for the back face */
-            backface-visibility: hidden; /* Hide back face when rotated away */
-            z-index: 1; /* Ensure back is behind initially */
-            border: 1px solid var(--border-color);
-            background-color: #f9f9f9; /* Changed back to original color */
+            transform: rotateY(180deg);
+            backface-visibility: hidden;
+            z-index: 1;
+            border: 0.5px solid var(--border-color);
+            background-color: #f9f9f9;
             text-align: center;
             padding: 25px;
             justify-content: flex-start;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03), 0 1px 4px rgba(0, 0, 0, 0.015); /* Even more shallow box-shadow */
         }
 
         .card-back h2 {
