@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TuneAI - Privacy Policy</title>
+    <meta property="og:title" content="TuneAI - Privacy Policy">
+    <meta property="og:description" content="TuneAI Health – Privacy Policy">
+    <meta property="og:image" content="https://tuneai.health/static/android-chrome-512x512.png">
+    <meta property="og:url" content="https://tuneai.health/privacy.html">
+    <meta property="og:type" content="website">
+    <link rel="apple-touch-icon" sizes="180x180" href="static/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="static/android-chrome-192x192.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="static/android-chrome-512x512.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="static/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="static/favicon-16x16.png">
+    <link rel="manifest" href="static/site.webmanifest">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-blue: #0c8ef0; /* Apple Blue */
+            --light-gray: #F5F5F7; /* Light background gray */
+            --dark-text: #1D1D1F; /* Dark text for contrast */
+            --medium-text: #6e6e73; /* Medium gray for secondary text */
+            --border-color: #D2D2D7;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--light-gray);
+            color: var(--dark-text);
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            overflow-x: hidden; /* Prevent horizontal scrolling */
+        }
+
+        /* This rule helps prevent horizontal scroll by ensuring elements don't exceed viewport width */
+        * {
+            box-sizing: border-box; /* Include padding and border in the element's total width and height */
+            max-width: 100%; /* Ensure no element ever exceeds the width of its parent */
+        }
+
+        main { /* Added styles for the main content area */
+            margin-top: 64px; /* Push main content down by header height */
+            flex-grow: 1; /* Allow main to grow and push footer to bottom */
+            padding: 40px 20px; /* Add padding to main content */
+            max-width: 800px; /* Limit width of main content */
+            margin-left: auto; /* Center main content */
+            margin-right: auto; /* Center main content */
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        /* Header */
+        header {
+            background-color: #fff;
+            padding: 0; /* Ensure no padding to control height precisely */
+            border-bottom: none; /* Remove the horizontal rule */
+            box-shadow: none; /* Removed initial box-shadow to eliminate gray background */
+            position: fixed; /* Make header fixed */
+            width: 100%; /* Full width */
+            top: 0; /* Align to top */
+            left: 0; /* Align to left */
+            z-index: 1000; /* Ensure it's above other content */
+            height: 64px; /* Set fixed height for header */
+            display: flex; /* Use flexbox for centering content */
+            align-items: center; /* Vertically center content */
+            transition: background-color 0.3s ease, backdrop-filter 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .header-scrolled {
+            background-color: rgba(255, 255, 255, 0.8); /* bg-white/80 */
+            backdrop-filter: blur(8px); /* backdrop-blur-md */
+            -webkit-backdrop-filter: blur(8px); /* For Safari */
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1); /* Slightly more prominent shadow when scrolled */
+        }
+
+        header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center; /* Ensure vertical centering of content within the container */
+            max-width: 1280px; /* Set max-width for header container */
+            width: 100%; /* Ensure it takes full width within its parent */
+            margin: 0 auto; /* Center the container */
+            padding: 0 20px; /* Add horizontal padding */
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            font-weight: 600;
+            font-size: 22px;
+            color: var(--dark-text);
+            text-decoration: none;
+            transition: transform 0.12s ease-out; /* Add transition for pulse effect */
+        }
+
+        .logo:hover {
+            transform: scale(1.05); /* Pulse effect on hover */
+        }
+
+        .logo img {
+            height: 24px; /* Set logo height to 24px */
+            margin-right: 10px;
+        }
+
+        .header-link {
+            color: var(--primary-blue);
+            text-decoration: none;
+            font-weight: 500;
+            padding: 5px 10px;
+            border-radius: 5px;
+            transition: background-color 0.1s ease, color 0.1s ease, text-decoration 0.2s ease; /* Add text-decoration to transition */
+        }
+
+        .header-link:hover {
+            background-color: transparent; /* Removed background color on hover */
+            color: #0056b3; /* Darker blue text on hover (blue-700) */
+            text-decoration: underline; /* Add underline on hover */
+        }
+
+        .cta-header-button { /* New style for "Early access" button */
+            border: 1px solid #0c8ef0; /* Border = #0c8ef0 */
+            border-radius: 8px; /* 8 px rounding */
+            padding: 12px 20px; /* 12px vertical padding */
+            font-weight: 600;
+            background-color: transparent;
+            color: #0c8ef0; /* Same as border color */
+            text-decoration: none;
+            transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+        }
+
+        .cta-header-button:hover {
+            background-color: var(--primary-blue);
+            color: #fff;
+        }
+
+        .header-nav-right { /* New container for right cluster to manage spacing */
+            display: flex;
+            align-items: center;
+            gap: 24px; /* 24px spacing between "Early access" and "Contacts" */
+            justify-content: flex-end; /* Align items to the right */
+            /* Removed width: 100%; */
+        }
+
+        .hamburger {
+            display: none; /* Hidden by default, will be shown on mobile */
+            flex-direction: column;
+            justify-content: space-around; /* Re-added to space out hamburger lines */
+            width: 24px; /* Width of the hamburger icon */
+            height: 18px; /* Height of the hamburger icon */
+            cursor: pointer;
+            background: transparent;
+            border: none;
+            padding: 0;
+            z-index: 1001; /* Above header */
+            position: relative; /* Add relative positioning for absolute children */
+        }
+
+        .hamburger span {
+            display: block;
+            width: 100%;
+            height: 2px;
+            background-color: var(--dark-text);
+            border-radius: 2px;
+            transition: all 0.3s ease;
+            /* Removed absolute positioning and transforms from default state */
+        }
+
+        .hamburger.open span:nth-child(1) {
+            position: absolute; /* Apply absolute positioning when open */
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(45deg); /* Center and rotate */
+        }
+
+        .hamburger.open span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.open span:nth-child(3) {
+            position: absolute; /* Apply absolute positioning when open */
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-45deg); /* Center and rotate */
+        }
+
+        .mobile-nav-drawer {
+            display: none; /* Hidden by default */
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background-color: #fff;
+            z-index: 999;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 64px 20px 20px; /* Padding from top to account for header height */
+            box-sizing: border-box;
+            transform: translateY(-100%); /* Start off-screen */
+            transition: transform 0.3s ease-out;
+        }
+
+        .mobile-nav-drawer.open {
+            transform: translateY(0%); /* Slide in */
+            display: flex;
+        }
+
+        .mobile-nav-drawer .logo {
+            margin-bottom: 40px;
+        }
+
+        .mobile-nav-drawer .nav-links-mobile {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .mobile-nav-drawer .nav-links-mobile .header-link {
+            font-size: 24px;
+            padding: 10px 0;
+            color: var(--dark-text);
+        }
+
+        .mobile-nav-drawer .cta-header-button {
+            width: 100%;
+            max-width: 300px; /* Limit button width */
+            text-align: center;
+            padding: 15px 0;
+        }
+
+        /* Mobile specific display toggles for header elements */
+        @media (max-width: 768px) {
+            .header-nav-right.desktop-only {
+                display: none;
+            }
+            .hamburger.mobile-only {
+                display: flex;
+            }
+        }
+
+        /* Footer (optional, but good practice) */
+        footer {
+            background-color: #fff; /* Neutral light grey background */
+            color: var(--medium-text);
+            text-align: center;
+            padding: 20px 20px; /* Adjusted padding */
+            border-top: 1px solid var(--border-color);
+            box-shadow: 0 -2px 4px rgba(0,0,0,0.02);
+            margin-top: auto; /* Pushes the footer to the bottom */
+        }
+
+        footer .container {
+            display: grid;
+            grid-template-columns: 1fr 1fr; /* Two columns for desktop */
+            gap: 40px; /* Space between columns */
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0; /* Remove container padding as padding is on footer itself */
+            align-items: flex-start;
+            text-align: left;
+        }
+
+        footer .footer-left {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        footer .footer-left .logo {
+            margin-bottom: 10px;
+        }
+
+        footer .footer-left p {
+            font-size: 14px; /* 14 px grey-600 */
+            color: #6e6e73; /* medium-text, which is grey-600 */
+            line-height: 1.5;
+            margin: 0;
+        }
+
+        footer .footer-right {
+            display: flex;
+            justify-content: flex-end; /* Align nav to the right */
+        }
+
+        footer .footer-nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px; /* Space between nav items */
+        }
+
+        footer .footer-nav ul li a {
+            font-size: 12px; /* 12 px tracking-wide */
+            letter-spacing: 0.05em; /* tracking-wide */
+            text-transform: uppercase; /* For a more distinct look */
+            text-decoration: none;
+            color: var(--medium-text);
+            transition: color 0.2s ease;
+        }
+
+        footer .footer-nav ul li a:hover {
+            color: var(--dark-text);
+        }
+
+        .footer-divider {
+            grid-column: 1 / -1; /* Span across both columns */
+            height: 1px;
+            background-color: #E5E7EB; /* Divider color */
+            margin: 20px 0;
+        }
+
+        .footer-bottom-bar {
+            grid-column: 1 / -1; /* Span across both columns */
+            text-align: center;
+            font-size: 10px;
+            color: var(--medium-text);
+            padding-top: 5px; /* Small padding above copyright */
+        }
+
+        h1 {
+            font-size: 40px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: var(--dark-text);
+        }
+
+        h2 {
+            font-size: 28px;
+            font-weight: 600;
+            margin-top: 40px;
+            margin-bottom: 15px;
+            color: var(--dark-text);
+        }
+
+        p {
+            font-size: 16px;
+            color: var(--medium-text);
+            margin-bottom: 15px;
+        }
+
+        ul {
+            list-style: disc;
+            padding-left: 20px;
+            margin-bottom: 15px;
+        }
+
+        li {
+            font-size: 16px;
+            color: var(--medium-text);
+            margin-bottom: 8px;
+        }
+
+        a {
+            color: var(--primary-blue);
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            footer .container {
+                grid-template-columns: 1fr; /* Single column for mobile */
+                gap: 20px;
+                text-align: center; /* Center align all content */
+            }
+
+            footer .footer-left,
+            footer .footer-right {
+                align-items: center; /* Center items in stacked columns */
+                justify-content: center; /* Center content horizontally within footer-right */
+            }
+
+            footer .footer-nav ul {
+                justify-content: center; /* Center nav links on mobile */
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <a href="index.html" class="logo">
+                <img src="static/heart.png" alt="TuneAI Logo">
+                TuneAI
+            </a>
+            <nav class="header-nav-right desktop-only">
+                <a href="contacts.html" class="header-link">Contacts</a>
+                <a href="https://docs.google.com/forms/d/e/1FAIpQLSdyG8oPrzNnDELY6bJm2wgoB6-_ai9oBvrmZNuCUf2GcG1cTw/viewform?usp=dialog" class="cta-header-button" target="_blank">Private Beta</a>
+            </nav>
+            <button class="hamburger mobile-only" aria-label="Open navigation menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </header>
+
+    <div class="mobile-nav-drawer">
+        <nav class="nav-links-mobile">
+            <a href="https://docs.google.com/forms/d/e/1FAIpQLSdyG8oPrzNnDELY6bJm2wgoB6-_ai9oBvrmZNuCUf2GcG1cTw/viewform?usp=dialog" class="header-link" target="_blank">Private Beta</a>
+            <a href="contacts.html" class="header-link">Contacts</a>
+        </nav>
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLSdsdnJk04RYjjaoRQhrRhROYIFL6R7A5xsjPTlGcozKxRu7mQ/viewform?usp=dialog" class="cta-header-button" target="_blank">Join waitlist</a>
+    </div>
+
+    <main>
+        <h1>TuneAI Health – Privacy Policy</h1>
+        <p>Last updated : 21 July 2025</p>
+
+        <p>
+            TuneAI Health (“<strong>TuneAI</strong>”, “we”, “our”, “us”) is a chat-first wellness companion
+            that helps you understand, experiment with, and improve your biology.
+            We believe your health data should stay <em>on your device</em> unless <em>you</em> explicitly
+            decide to share it. This policy explains what data we access, why, and the limited
+            situations in which it ever leaves your phone.
+        </p>
+
+        <h2>1 · Data we access <em>on device</em></h2>
+        <ul>
+            <li><strong>Apple Health Kit</strong> (only if you grant permission) – steps, distance, heart-rate, HRV, sleep, workouts, nutrition and other metrics.</li>
+            <li><strong>Manual logs</strong> – workouts, supplements, meals (photo or text), free-form notes.</li>
+            <li><strong>Lab results</strong> – when you import a PDF or CSV we extract numerical biomarkers and discard the original file; names and identifiers are not stored.</li>
+            <li><strong>Settings data</strong> – language preference, theme, toggles for each data source.</li>
+        </ul>
+
+        <h2>2 · Where your data is stored</h2>
+        <ul>
+            <li>All raw and derived data are kept in an encrypted SQLite database on your device.</li>
+            <li>We do <strong>not</strong> copy or back-up that database to our servers or third-party clouds.</li>
+            <li>You are in control of backups (iCloud, iTunes, Finder, or manual export in <em>Settings → Data Control</em>).</li>
+        </ul>
+
+        <h2>3 · When data can leave your device</h2>
+        <p>
+            When you ask a question in the chat, TuneAI assembles only the
+            <em>minimum set of numeric or textual facts</em> needed to answer
+            (e.g.&nbsp;“average HRV last 30 days = 72 ms”).  
+            These snippets are sent <strong>ephemerally</strong> to our
+            inference endpoint, which uses <strong>OpenAI API</strong>
+            (USA) and <strong>Gemini API</strong> (USA) as processors.  
+            <em>OpenAI and Google (for Gemini) do not train on, log, or store these snippets.</em>
+        </p>
+
+        <h2>4 · What we never do</h2>
+        <ul>
+            <li>No advertising or tracking SDKs.</li>
+            <li>No sale or rental of any data.</li>
+            <li>No identifying health data stored on our servers.</li>
+        </ul>
+
+        <h2>5 · Your controls</h2>
+        <ul>
+            <li>Revoke Apple Health permissions at any time in the iOS Health app.</li>
+            <li>Export or wipe all local data via <em>Settings → Data Control</em>.</li>
+            <li>After you delete data it is removed immediately; we never had a server copy.</li>
+        </ul>
+
+        <h2>6 · Children</h2>
+        <p>TuneAI is not intended for children under 13 and we do not knowingly collect their data.</p>
+
+        <h2>7 · Changes</h2>
+        <p>Material changes will be announced in-app and on this page.</p>
+
+        <h2>8 · Contact</h2>
+        <p>
+Questions? Email <a href="mailto:hello@tuneai.health">hello@tuneai.health</a>
+— we reply within 72 hrs.
+</p>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-left">
+                <a href="index.html" class="logo">
+                    <img src="static/heart.png" alt="TuneAI Logo">
+                    TuneAI
+                </a>
+                <p>Smarter decisions from your biology</p>
+            </div>
+            <div class="footer-right">
+                <nav class="footer-nav">
+                    <ul>
+                        <li><a href="index.html#features-section">Features</a></li>
+                        <li><a href="index.html#insights-section">How it works</a></li>
+                        <li><a href="privacy.html">Privacy</a></li>
+                        <li><a href="#">Terms</a></li>
+                    </ul>
+                </nav>
+            </div>
+            <div class="footer-divider"></div>
+            <div class="footer-bottom-bar">
+                <p>&copy; 2025 TuneAI. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Header scroll behavior
+            const header = document.querySelector('header');
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 48) {
+                    header.classList.add('header-scrolled');
+                } else {
+                    header.classList.remove('header-scrolled');
+                }
+            });
+
+            // Mobile nav drawer functionality
+            const hamburger = document.querySelector('.hamburger');
+            const mobileNavDrawer = document.querySelector('.mobile-nav-drawer');
+
+            if (hamburger && mobileNavDrawer) {
+                hamburger.addEventListener('click', () => {
+                    hamburger.classList.toggle('open');
+                    mobileNavDrawer.classList.toggle('open');
+                });
+
+                // Close drawer when a link is clicked
+                mobileNavDrawer.querySelectorAll('a').forEach(link => {
+                    link.addEventListener('click', () => {
+                        hamburger.classList.remove('open');
+                        mobileNavDrawer.classList.remove('open');
+                    });
+                });
+            }
+        });
+    </script>
+</body>
+</html>
