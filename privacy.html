@@ -266,7 +266,6 @@
         footer .container {
             display: grid;
             grid-template-columns: 1fr 1fr; /* Two columns for desktop */
-            gap: 40px; /* Space between columns */
             max-width: 1200px;
             margin: 0 auto;
             padding: 0; /* Remove container padding as padding is on footer itself */
@@ -328,9 +327,9 @@
         .footer-bottom-bar {
             grid-column: 1 / -1; /* Span across both columns */
             text-align: center;
-            font-size: 10px;
-            color: var(--medium-text);
-            padding-top: 5px; /* Small padding above copyright */
+            font-size: 10px; /* Explicitly set font-size */
+            color: var(--medium-text); /* Explicitly set color */
+            padding-top: 0px; /* Small padding above copyright */
         }
 
         h1 {
@@ -378,7 +377,6 @@
         @media (max-width: 768px) {
             footer .container {
                 grid-template-columns: 1fr; /* Single column for mobile */
-                gap: 20px;
                 text-align: center; /* Center align all content */
             }
 
@@ -505,7 +503,6 @@ Questions? Email <a href="mailto:hello@tuneai.health">hello@tuneai.health</a>
                         <li><a href="index.html#features-section">Features</a></li>
                         <li><a href="index.html#connect-data-section">How it works</a></li>
                         <li><a href="privacy.html">Privacy</a></li>
-                        <li><a href="#">Terms</a></li>
                     </ul>
                 </nav>
             </div>
