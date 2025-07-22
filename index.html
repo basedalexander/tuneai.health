@@ -532,14 +532,26 @@
             transition: opacity 0.2s ease, filter 0.2s ease; /* Add filter to transition */
         }
 
+        .device-feature-item .dna-emoji-icon {
+            font-size: 40px; /* Make emoji size consistent with image icons */
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            filter: grayscale(100%); /* Apply grayscale filter to emoji */
+            opacity: 0.7; /* Set initial opacity */
+            transition: opacity 0.2s ease, filter 0.2s ease; /* Add transition for hover effect */
+        }
+
+        .device-feature-item:hover .dna-emoji-icon {
+            opacity: 1; /* Restore opacity on hover */
+            filter: grayscale(0%); /* Remove grayscale on hover */
+        }
+
         .device-feature-item:hover {
             transform: translateY(-2px); /* Consistent hover with pills */
             box-shadow: 0 5px 15px rgba(0,0,0,0.12); /* Slightly enhanced shadow on hover */
-        }
-
-        .device-feature-item:hover img {
-            opacity: 1; /* Restore opacity on hover */
-            filter: grayscale(0%) !important; /* Restore natural color on hover */
         }
 
         /* New container for data use items on desktop */
@@ -1818,9 +1830,13 @@
                             <img src="static/lab_tests_icon.png" alt="Lab tests icon">
                             Lab tests (160+ markers)
                         </a>
+                        <a href="#" class="device-feature-item" aria-label="DNA tests data">
+                            <span class="dna-emoji-icon">🧬</span>
+                            DNA tests
+                        </a>
                         <a href="#" class="device-feature-item" aria-label="Workouts log data">
                             <img src="static/notes_icon.svg" alt="Notes icon">
-                            Workouts log
+                            Workouts logs
                         </a>
                         <a href="#" class="device-feature-item" aria-label="Diet logs data">
                             <img src="static/notes_icon.svg" alt="Notes icon">
@@ -1877,9 +1893,9 @@
                     </a>
                     <span class="device-strip-item device-separator mobile-plus" aria-hidden="true">+</span>
                     <div class="device-use-data-mobile">
-                        <a href="#" class="device-feature-item" aria-label="Workouts log data">
+                        <a href="#" class="device-feature-item" aria-label="Workouts logs data">
                             <img src="static/notes_icon.svg" alt="Notes icon">
-                            Workouts log
+                            Workouts logs
                         </a>
                         <a href="#" class="device-feature-item" aria-label="Diet logs data">
                             <img src="static/notes_icon.svg" alt="Notes icon">
@@ -1900,6 +1916,10 @@
                         <a href="#" class="device-feature-item" aria-label="Lab tests data">
                             <img src="static/lab_tests_icon.png" alt="Lab tests icon">
                             Lab tests
+                        </a>
+                        <a href="#" class="device-feature-item" aria-label="DNA test data">
+                            <span class="dna-emoji-icon">🧬</span>
+                            DNA tests
                         </a>
                     </div>
                     <span class="device-strip-item device-separator mobile-plus" aria-hidden="true">+</span>
